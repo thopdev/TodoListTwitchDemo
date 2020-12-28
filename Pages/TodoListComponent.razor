@@ -1,0 +1,15 @@
+﻿@using Todo.Models
+<ul>
+    @foreach (var todoItem in TodoItems)
+    {
+        <li>
+            <input type="checkbox" name="status" @bind="@todoItem.Status" />
+            <label>@todoItem.Name</label>
+        </li>
+    }
+    
+    <input type="text" @bind="@NewTodoItemName"/>
+    <button @onclick="@AddTodoItemToList" >Add</button>
+
+
+</ul>
