@@ -1,15 +1,21 @@
-﻿<ul class="flex w-full flex-wrap gap-4">
-    @foreach (var todoItem in TodoItems.OrderBy(x => x.Status))
-    {
-        <li class="container w-full h-24 bg-green-100 rounded flex flex-wrap content-center shadow">
-            <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@todoItem.Status" />
-            <label class="m-4 h-8 text-lg">@todoItem.Name</label>
+﻿  @if (TodoItems != null)
+  {
+<ul class="flex w-full flex-wrap gap-4">
+  
+        @foreach (var todoItem in TodoItems.OrderBy(x => x.Status))
+        {
+            <TodoItemComponent TodoItem="@todoItem" OnChange="Save" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+        }
+        <li class="w-full">
+            <label>New todo item!</label>
+            <input class="block border-gray-600 w-full rounded shadow" type="text" @bind="@NewTodoItemName"/>
+            <label class="@(IsInputEmpty ? "" : "hidden") text-red-500">Input is required!</label>
+            <button disabled="@IsInputEmpty" class="rounded shadow p-4" @onclick="@AddTodoItemToList">Add</button>
         </li>
-    }
-    <li class="w-full">
-        <label>New todo item!</label>
-        <input class="block border-gray-600 w-full rounded shadow" type="text" @bind="@NewTodoItemName"/>
-        <label class="@(IsInputEmpty ? "" : "hidden") text-red-500">Input is required!</label>
-        <button disabled="@IsInputEmpty" class="rounded shadow p-4" @onclick="@AddTodoItemToList">Add</button>
-    </li>
+
 </ul>
+  }
+  else
+  {
+      <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+  }
