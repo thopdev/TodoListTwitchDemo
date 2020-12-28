@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Todo.Models;
 
 namespace Todo.Pages
@@ -7,7 +8,9 @@ namespace Todo.Pages
     {
         public IList<TodoItem> TodoItems { get; } = new List<TodoItem>{new TodoItem{Name= "Add Css"}, new TodoItem{Name = "Add API"}, new TodoItem { Name = "Grab a drink" } };
 
-        public string NewTodoItemName { get; set; }
+        public string NewTodoItemName { get; set; } = string.Empty;
+        public bool IsInputEmpty => NewTodoItemName == string.Empty;
+
 
         public void AddTodoItemToList()
         {
