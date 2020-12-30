@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
+using Plk.Blazor.DragDrop;
 using Todo.Services;
 using Todo.Services.Interfaces;
 
@@ -23,6 +24,7 @@ namespace Todo
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<ITodoListService, TodoListService>();
+            builder.Services.AddBlazorDragDrop();
             await builder.Build().RunAsync();
         }
     }

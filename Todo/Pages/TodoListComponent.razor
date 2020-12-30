@@ -1,18 +1,15 @@
-﻿  
-<h1 class="text-2xl">Welcome to our Todo List</h1>
+﻿<h1 class="text-2xl">Welcome to our Todo List</h1>
 
 @if (TodoItems != null)
-  {
-<div class="flex w-full flex-wrap gap-4">
-  
-        @foreach (var todoItem in TodoItems.OrderBy(x => x.Status))
-        {
-            <TodoItemComponent TodoItem="@todoItem" OnChange="Save" OnDelete="RemoveFromTodoList"></TodoItemComponent>
-        }
+{
+    <div class="flex w-full flex-wrap gap-4">
+        <Dropzone Items="TodoItems">
+            <TodoItemComponent TodoItem="@context" OnChange="Save" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+        </Dropzone>
         <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
-</div>
-  }
-  else
-  {
-      <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
-  }
+    </div>
+}
+else
+{
+    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+}

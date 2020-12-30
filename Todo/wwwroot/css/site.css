@@ -21658,45 +21658,138 @@ video {
 }
 
 .loader {
-  border-top-color: #3498db;
   -webkit-animation: spinner 1.5s linear infinite;
   animation: spinner 1.5s linear infinite;
+  border-top-color: #3498db;
 }
 
 @-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
+  0% { -webkit-transform: rotate(0deg);
   }
 
-  100% {
-    -webkit-transform: rotate(360deg);
+  100% { -webkit-transform: rotate(360deg);
   }
 }
 
 .loader {
-  border-top-color: #3498db;
   -webkit-animation: spinner 1.5s linear infinite;
   animation: spinner 1.5s linear infinite;
+  border-top-color: #3498db;
 }
 
 @-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
+  0% { -webkit-transform: rotate(0deg);
   }
 
-  100% {
-    -webkit-transform: rotate(360deg);
+  100% { -webkit-transform: rotate(360deg);
   }
 }
 
 @keyframes spinner {
-  0% {
-    transform: rotate(0deg);
+  0% { transform: rotate(0deg);
   }
 
-  100% {
-    transform: rotate(360deg);
+  100% { transform: rotate(360deg);
   }
+}
+
+/*add this to avoid flickering*/
+
+.plk-dd-inprogess > * { pointer-events: none;
+}
+
+/*dropzone style style*/
+
+.plk-dd-dropzone {
+  min-height: 50px;
+  width: 100%;
+}
+
+/*drag drop styles*/
+
+.plk-dd-spacing {
+  height: 10px;
+  width: 100%;
+}
+
+.plk-dd-spacing-dragged-over { padding: 25px;
+}
+
+.plk-dd-dragged-over {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+  background-color: lightgray;
+  opacity: 0.6;
+}
+
+.plk-dd-dragged-over > div {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+  background-color: lightgray;
+  opacity: 0.6;
+}
+
+.plk-dd-dragged-over-denied {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+  background-color: red;
+  opacity: 0.6;
+}
+
+.plk-dd-in-transit { opacity: 0;
+}
+
+.plk-dd-in-transit > div { opacity: 0;
+}
+
+@-webkit-keyframes blinker {
+  50% { opacity: 0;
+  }
+}
+
+@keyframes blinker {
+  50% { opacity: 0;
+  }
+}
+
+.blink_me { -webkit-animation: blinker 1s linear infinite; animation: blinker 1s linear infinite;
+}
+
+/*for flex demo*/
+
+.plk-flex .plk-dd-spacing {
+  height: auto;
+  width: 20px;
+}
+
+.plk-flex .plk-dd-dragged-over {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+  background-color: lightgray;
+  opacity: 0.6;
+}
+
+.plk-flex .plk-dd-dragged-over > div {
+  -webkit-animation: blinker 1s linear infinite;
+  animation: blinker 1s linear infinite;
+  background-color: lightgray;
+  opacity: 0.9;
+}
+
+.plk-flex .plk-dd-in-transit { background-color: orangered;
+}
+
+.plk-flex .plk-dd-in-transit > div { background-color: orangered;
+}
+
+.plk-dd-noselect {
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 @media (min-width: 640px) {
