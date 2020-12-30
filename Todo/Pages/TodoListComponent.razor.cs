@@ -20,6 +20,7 @@ namespace Todo.Pages
 
         protected override async Task OnInitializedAsync()
         {
+
             await Task.Delay(1000);
             TodoItems =  new ObservableCollection<TodoItem>(await TodoListService.Get());
             TodoItems.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs args) => Save();

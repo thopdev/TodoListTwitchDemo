@@ -1,9 +1,17 @@
-﻿<div class="w-full h-24 bg-green-100 rounded flex flex-wrap content-center shadow justify-items-stretch">
+﻿@using Todo.Models
+<div class="w-full h-24 rounded flex flex-wrap content-center shadow justify-items-stretch @GetPriorityColor()">
     <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@TodoItem.Status" />
     
     @if (Editing)
     {
-        <input @bind="@NewName" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300">
+        <input @bind="@NewName" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300 @GetPriorityColor() shadow">
+
+        <select @bind="@NewPriority" class="rounded @GetPriorityColor() mx-4 shadow">
+            @foreach (var priority in Enum.GetValues(typeof(TodoItemPriority)))
+            {
+                <option value="@priority.ToString()">@priority</option>
+            }
+        </select>
         <button class="shadow rounded h-auto justify-self-end px-4" @onclick="Save">Save</button>
 
     }

@@ -1,5 +1,4 @@
-﻿<h1 class="text-2xl">Welcome to our Todo List</h1>
-
+﻿@using System.IO
 @if (TodoItems != null)
 {
     <div class="flex w-full flex-wrap gap-4">
@@ -10,6 +9,7 @@
     </div>
 }
 else
-{
+{<div class="w-full h-screen flex justify-center flex-wrap content-center">
     <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+</div>
 }
