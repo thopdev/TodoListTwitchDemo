@@ -1,16 +1,13 @@
-﻿<div class="w-full">
+﻿<div class="w-full mt-2">
     <EditForm Model="@TodoItem" OnValidSubmit="OnSubmit">
         <DataAnnotationsValidator />
 
-        <label>New Todo Item:</label>
-        <InputText id="Text" class="block border-gray-600 w-full rounded shadow" @bind-Value="TodoItem.Name"></InputText>
+        <div class="w-full h-16 flex">
+            <button type="submit" class="rounded-l h-full bg-green-500 px-4 shadow font-medium text-white">Add</button>
 
-        <div class="text-red-500">
-            <ValidationSummary />
+            <InputText placeholder="New todo text" id="Text" class="w-full rounded-r h-full shadow font-bold pl-2" @bind-Value="TodoItem.Name"></InputText>
+
         </div>
-        
-        <div class="w-full">
-            <button type="submit" class="rounded shadow p-4">Add</button>
-        </div>
+        <ValidationSummary class="text-red-500" />
     </EditForm>
 </div>

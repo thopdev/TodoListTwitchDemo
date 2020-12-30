@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -15,20 +14,22 @@ namespace Todo.Pages
         [Inject]
         public ITodoListService TodoListService { get; set; }
 
+        [Parameter] public bool DisplayChecked { get; set; }
+
         public ObservableCollection<TodoItem> TodoItems { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
-
             await Task.Delay(1000);
-            TodoItems =  new ObservableCollection<TodoItem>(await TodoListService.Get());
+            TodoItems =  new ObservableCollection<TodoItem>((await TodoListService.Get()).Where(x => x.Status == DisplayChecked));
             TodoItems.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs args) => Save();
         }
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
-            TodoItems.Add(todoItem);
+
+            TodoItems.Insert(0, todoItem);
             Save();
         }
 

@@ -4,7 +4,7 @@
     
     @if (Editing)
     {
-        <input @bind="@NewName" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300 @GetPriorityColor() shadow">
+        <input @bind="@NewName" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300 @GetPriorityColor() shadow font-medium">
 
         <select @bind="@NewPriority" class="rounded @GetPriorityColor() mx-4 shadow">
             @foreach (var priority in Enum.GetValues(typeof(TodoItemPriority)))
@@ -17,7 +17,7 @@
     }
     else
     {
-        <label class="m-4 w-4/5 h-8 text-lg">@TodoItem.Name</label>
+        <label class="m-4 w-4/5 h-8 text-lg font-medium">@TodoItem.Name</label>
         <button class="shadow rounded mr-4 h-auto px-4" @onclick="Edit">Edit</button>
         <button class="shadow rounded h-auto px-4" @onclick="Delete">Delete</button>
 
