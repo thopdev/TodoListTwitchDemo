@@ -23,7 +23,13 @@ namespace Todo.Services
 
         public async Task<IEnumerable<TodoItem>> Get()
         {
-            return await _localStorageService.GetItemAsync<IEnumerable<TodoItem>>(StorageKey);
+            if (await _localStorageService.ContainKeyAsync(StorageKey))
+            {
+                return await _localStorageService.GetItemAsync<IEnumerable<TodoItem>>(StorageKey);
+
+            }
+
+            return new List<TodoItem>{new TodoItem{Name = "Fill up your todo list!"}};
         }
 
 
