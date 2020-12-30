@@ -15,9 +15,6 @@ namespace Todo.Pages
 
         public IList<TodoItem> TodoItems { get; set; } 
 
-        public string NewTodoItemName { get; set; } = string.Empty;
-        public bool IsInputEmpty => NewTodoItemName == string.Empty;
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -25,10 +22,9 @@ namespace Todo.Pages
             TodoItems = (await TodoListService.Get()).ToList();
         }
 
-        public void AddTodoItemToList()
+        public void AddTodoItemToList(TodoItem todoItem)
         {
-            TodoItems.Add(new TodoItem(){Name = NewTodoItemName});
-            NewTodoItemName = string.Empty;
+            TodoItems.Add(todoItem);
             Save();
         }
 

@@ -1,0 +1,16 @@
+﻿<div class="w-full">
+    <EditForm Model="@TodoItem" OnValidSubmit="OnSubmit">
+        <DataAnnotationsValidator />
+
+        <label>New Todo Item:</label>
+        <InputText id="Text" class="block border-gray-600 w-full rounded shadow" @bind-Value="TodoItem.Name"></InputText>
+
+        <div class="text-red-500">
+            <ValidationSummary />
+        </div>
+        
+        <div class="w-full">
+            <button type="submit" class="rounded shadow p-4">Add</button>
+        </div>
+    </EditForm>
+</div>

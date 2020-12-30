@@ -1,4 +1,4 @@
-﻿<li class="container w-full h-24 bg-green-100 rounded flex flex-wrap content-center shadow justify-items-stretch">
+﻿<div class="w-full h-24 bg-green-100 rounded flex flex-wrap content-center shadow justify-items-stretch">
     <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@TodoItem.Status" />
     
     @if (Editing)
@@ -14,4 +14,4 @@
         <button class="shadow rounded h-auto px-4" @onclick="Delete">Delete</button>
 
     }
-</li>
+</div>
