@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Todo.Models;
+using Todo.Shared.Enums;
 
 namespace Todo.Pages
 {

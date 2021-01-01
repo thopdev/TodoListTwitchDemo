@@ -20,4 +20,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Todo.Shared\Todo.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

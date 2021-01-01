@@ -28,7 +28,7 @@ namespace Todo.Pages
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
-
+            TodoListService.AddTodoItemAsync(todoItem);
             TodoItems.Insert(0, todoItem);
             Save();
         }
