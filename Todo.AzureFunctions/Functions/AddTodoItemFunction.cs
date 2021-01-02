@@ -35,12 +35,24 @@ namespace Todo.AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var data = JsonConvert.DeserializeObject<TodoItemDto>(requestBody);
+            try
+            {
 
-            _cloudTable.Execute(TableOperation.Insert(new TodoListEntity{PartitionKey = Guid.NewGuid().ToString(), RowKey = Guid.NewGuid().ToString(), Name = data.Name, Priority = (int) data.Priority, Status = data.Status}));
+                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                var data = JsonConvert.DeserializeObject<TodoItemDto>(requestBody);
 
-            return new OkResult();
+                _cloudTable.Execute(TableOperation.Insert(new TodoListEntity
+                {
+                    PartitionKey = Guid.NewGuid().ToString(), RowKey = Guid.NewGuid().ToString(), Name = data.Name,
+                    Priority = (int) data.Priority, Status = data.Status
+                }));
+
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return new OkObjectResult(e);
+            }
         }
     }
 }
