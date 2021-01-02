@@ -27,12 +27,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.*
-
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-      
-      - name: Publish with dotnet
-        run: dotnet publish --configuration Release
       
       - name: Build And Deploy
         id: builddeploy
@@ -45,7 +39,9 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/Todo" # App source code path
           app_artifact_location: "bin/Release/net5.0/publish/wwwroot" # Built app content directory - optional
-          api_location: "/Todo.AzureFunctions/bin/Release/netcoreapp3.1/publish"
+          api_location: "/Todo.AzureFunctions"
+          app_build_command: "dotnet publish -c Release"
+          api_build_command: "dotnet publish -c Release"
           
           ###### End of Repository/Build Configurations ######
 
