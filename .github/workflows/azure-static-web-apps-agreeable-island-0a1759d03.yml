@@ -45,7 +45,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/Todo" # App source code path
           app_artifact_location: "bin/Release/net5.0/publish/wwwroot" # Built app content directory - optional
-          api_location: "/Todo.AzureFunctions/bin/Release/netcoreapp3.1/bin"
+          api_location: "/Todo.AzureFunctions/bin/Release/netcoreapp3.1/publish"
           
           ###### End of Repository/Build Configurations ######
 
