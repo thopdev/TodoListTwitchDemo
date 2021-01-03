@@ -55,6 +55,13 @@ namespace Todo.Services
             await _httpService.PutVoidAsync(FunctionConstants.UpdateTodoItemFunction, dto);
         }
 
+        public async Task DeleteItem(Guid listId, string id)
+        {
+            await _httpService.DeleteAsync($"{FunctionConstants.DeleteTodoItemFunction}/{listId}/{id}");
+
+
+        }
+
         public async Task<IEnumerable<TodoItem>> GetList(Guid id)
         {
             var dtos = await _httpService.GetAsync<List<TodoItemDto>>(FunctionConstants.GetTodoListFunction + $"?id={id}");

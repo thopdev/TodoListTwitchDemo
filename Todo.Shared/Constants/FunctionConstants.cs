@@ -5,6 +5,8 @@
         public const string AddTodoItemFunction = "AddTodoItem";
         public const string GetTodoListFunction = "GetTodoList";
         public const string UpdateTodoItemFunction = "UpdateTodoItem";
+        public const string DeleteTodoItemFunction = "DeleteTodoItem";
+
 
 
     }

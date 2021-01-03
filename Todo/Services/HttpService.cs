@@ -25,6 +25,11 @@ namespace Todo.Services
             return body;
         }
 
+        public async Task DeleteAsync(string url)
+        {
+            await _httpClient.DeleteAsync(new Uri(_httpClient.BaseAddress + "/" + url));
+        }
+
         public async Task PutVoidAsync(string url, object value)
         {
             var response = await _httpClient.PutAsJsonAsync(new Uri(_httpClient.BaseAddress + "/" + url), value);

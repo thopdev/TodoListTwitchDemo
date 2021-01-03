@@ -34,8 +34,7 @@ namespace Todo.AzureFunctions.Functions
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            try
-            {
+       
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
@@ -47,11 +46,7 @@ namespace Todo.AzureFunctions.Functions
                 }));
 
                 return new OkResult();
-            }
-            catch (Exception e)
-            {
-                return new OkObjectResult(e);
-            }
-        }
+
+            } 
     }
 }

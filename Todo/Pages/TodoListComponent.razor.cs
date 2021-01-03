@@ -24,34 +24,25 @@ namespace Todo.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await Task.Delay(1000);
             ListGuid = await TodoListService.GetListId();
             TodoItems =  new ObservableCollection<TodoItem>((await TodoListService.GetList(ListGuid)).Where(x => x.Status == DisplayChecked));
-            TodoItems.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs args) => Save();
         }
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
             TodoListService.AddTodoItemAsync(ListGuid, todoItem);
             TodoItems.Insert(0, todoItem);
-            Save();
         }
 
-        public void RemoveFromTodoList(TodoItem item)
+        public async Task RemoveFromTodoList(TodoItem item)
         {
             TodoItems.Remove(item);
-            Save();
-
+            await TodoListService.DeleteItem(ListGuid, item.Id);
         }
 
         public async Task Update(TodoItem item)
         {
             await TodoListService.UpdateItem(ListGuid, item);
-        }
-
-        public void Save()
-        {
-            TodoListService.Save(TodoItems);
         }
     }
 }

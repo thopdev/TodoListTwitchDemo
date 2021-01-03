@@ -12,5 +12,6 @@ namespace Todo.Services.Interfaces
         Task<IEnumerable<TodoItem>> GetList(Guid id);
         Task UpdateItem(Guid id, TodoItem todoItem);
         Task<Guid> GetListId();
+        Task DeleteItem(Guid listId, string id);
     }
 }

@@ -1,15 +1,18 @@
 ﻿@if (TodoItems != null)
 {
-<div class="flex w-full flex-wrap">
-    <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
-    <Dropzone Items="TodoItems">
-        <TodoItemComponent TodoItem="@context" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
-    </Dropzone>
+    <div class="flex w-full flex-wrap gap-2">
+        <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
+        @foreach (var item in TodoItems)
+        {
+            <TodoItemComponent TodoItem="@item" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+        }
 
-</div>
+    </div>
 }
 else
-{<div class="w-full h-screen flex justify-center flex-wrap content-center">
-    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
-</div>
+{
+    
+    <div class="w-full h-screen flex justify-center flex-wrap content-center">
+        <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-64 w-64"></div>
+    </div>
 }
