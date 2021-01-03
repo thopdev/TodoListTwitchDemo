@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Threading.Tasks;
+using AutoMapper;
 using Blazored.LocalStorage;
 using Todo.Models;
 using Todo.Services.Interfaces;
@@ -11,20 +15,25 @@ namespace Todo.Services
     public class TodoListService : ITodoListService
     {
         private const string StorageKey = "todoList";
+        private const string StorageIdKey = "todoListId";
+
         private readonly ILocalStorageService _localStorageService;
         private readonly IHttpService _httpService;
+        private readonly IMapper _mapper;
 
-        public TodoListService(ILocalStorageService localStorageService, IHttpService httpService)
+        public TodoListService(ILocalStorageService localStorageService, IHttpService httpService, IMapper mapper)
         {
             _localStorageService = localStorageService;
             _httpService = httpService;
+            _mapper = mapper;
         }
 
 
-        public async Task AddTodoItemAsync(TodoItem todoItem)
+        public async Task AddTodoItemAsync(Guid todoListId, TodoItem todoItem)
         {
-            var dto = new TodoItemDto
+            var dto = new NewTodoItemDto
             {
+                ListId = todoListId.ToString(),
                 Name = todoItem.Name,
                 Priority = todoItem.Priority,
                 Status = todoItem.Status
@@ -38,15 +47,41 @@ namespace Todo.Services
             await _localStorageService.SetItemAsync(StorageKey, todoList);
         }
 
-        public async Task<IEnumerable<TodoItem>> Get()
+        public async Task UpdateItem(Guid id, TodoItem todoItem)
         {
-            if (await _localStorageService.ContainKeyAsync(StorageKey))
+            var dto = _mapper.Map<UpdateTodoItemDto>(todoItem);
+            dto.ListId = id.ToString();
+
+            await _httpService.PutVoidAsync(FunctionConstants.UpdateTodoItemFunction, dto);
+        }
+
+        public async Task DeleteItem(Guid listId, string id)
+        {
+            await _httpService.DeleteAsync($"{FunctionConstants.DeleteTodoItemFunction}/{listId}/{id}");
+
+
+        }
+
+        public async Task<IEnumerable<TodoItem>> GetList(Guid id)
+        {
+            var dtos = await _httpService.GetAsync<List<TodoItemDto>>(FunctionConstants.GetTodoListFunction + $"?id={id}");
+            Console.WriteLine(JsonSerializer.Serialize(dtos));
+            var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
+            return models;
+        }
+
+
+        public async Task<Guid> GetListId()
+        {
+            if (await _localStorageService.ContainKeyAsync(StorageIdKey))
             {
-                return await _localStorageService.GetItemAsync<IEnumerable<TodoItem>>(StorageKey);
+                return await _localStorageService.GetItemAsync<Guid>(StorageIdKey);
 
             }
 
-            return new List<TodoItem>{new TodoItem{Name = "Fill up your todo list!"}};
+            var id = Guid.NewGuid();
+            await _localStorageService.SetItemAsync(StorageIdKey, id);
+            return id;
         }
 
 

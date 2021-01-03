@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -18,31 +19,30 @@ namespace Todo.Pages
 
         public ObservableCollection<TodoItem> TodoItems { get; set; }
 
+        private Guid ListGuid { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
-            await Task.Delay(1000);
-            TodoItems =  new ObservableCollection<TodoItem>((await TodoListService.Get()).Where(x => x.Status == DisplayChecked));
-            TodoItems.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs args) => Save();
+            ListGuid = await TodoListService.GetListId();
+            TodoItems =  new ObservableCollection<TodoItem>((await TodoListService.GetList(ListGuid)).Where(x => x.Status == DisplayChecked));
         }
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
-            TodoListService.AddTodoItemAsync(todoItem);
+            TodoListService.AddTodoItemAsync(ListGuid, todoItem);
             TodoItems.Insert(0, todoItem);
-            Save();
         }
 
-        public void RemoveFromTodoList(TodoItem item)
+        public async Task RemoveFromTodoList(TodoItem item)
         {
             TodoItems.Remove(item);
-            Save();
-
+            await TodoListService.DeleteItem(ListGuid, item.Id);
         }
 
-        public void Save()
+        public async Task Update(TodoItem item)
         {
-            TodoListService.Save(TodoItems);
+            await TodoListService.UpdateItem(ListGuid, item);
         }
     }
 }

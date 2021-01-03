@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using AutoMapper;
 using Blazored.LocalStorage;
 using Microsoft.Extensions.DependencyInjection;
 using Plk.Blazor.DragDrop;
@@ -14,12 +15,11 @@ namespace Todo.Extensions
         {
             services.AddBlazoredLocalStorage();
             services.AddBlazorDragDrop();
-
+            services.AddAutoMapper(typeof(Program));
 
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ITodoListService, TodoListService>();
 
-            
 
             return services;
         }
