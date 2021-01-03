@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using AutoMapper;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,7 @@ namespace Todo.AzureFunctions
                 });
 
             builder.Services.AddScoped<ICloudTableFactory, CloudTableFactory>();
+            builder.Services.AddAutoMapper(GetType());
         }
     }
 }

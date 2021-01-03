@@ -32,18 +32,17 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.AddTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             try
             {
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var data = JsonConvert.DeserializeObject<TodoItemDto>(requestBody);
+                var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
 
                 _cloudTable.Execute(TableOperation.Insert(new TodoListEntity
                 {
-                    PartitionKey = Guid.NewGuid().ToString(), RowKey = Guid.NewGuid().ToString(), Name = data.Name,
+                    PartitionKey = data.ListId, RowKey = Guid.NewGuid().ToString(), Name = data.Name,
                     Priority = (int) data.Priority, Status = data.Status
                 }));
 

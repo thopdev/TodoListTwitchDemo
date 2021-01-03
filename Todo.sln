@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30709.64
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo", "Todo\Todo.csproj", "{46AA13D1-2BA7-4906-B171-1B055B39DA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.AzureFunctions", "Todo.AzureFunctions\Todo.AzureFunctions.csproj", "{14659401-838B-4B25-BE94-5C71F269B08C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.AzureFunctions", "Todo.AzureFunctions\Todo.AzureFunctions.csproj", "{14659401-838B-4B25-BE94-5C71F269B08C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Shared", "Todo.Shared\Todo.Shared.csproj", "{3BD6041E-B7AE-489F-8CFB-BF284495C191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Todo.Shared", "Todo.Shared\Todo.Shared.csproj", "{3BD6041E-B7AE-489F-8CFB-BF284495C191}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

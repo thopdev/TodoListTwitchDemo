@@ -3,7 +3,7 @@
 <div class="flex w-full flex-wrap">
     <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
     <Dropzone Items="TodoItems">
-        <TodoItemComponent TodoItem="@context" OnChange="Save" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+        <TodoItemComponent TodoItem="@context" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
     </Dropzone>
 
 </div>
