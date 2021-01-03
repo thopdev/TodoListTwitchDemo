@@ -1,9 +1,9 @@
 # Todo App using Blazor and Azure functions with Table Storage!
-Create live on [twitch](twitch.tv/thopdev)
-Also check out my:
-[Twitter](twitter.com/thopdev)
-[Youtube](https://www.youtube.com/channel/UCFahGHoCA0ukPlSU1Y3ndqw)
-[Youtube playlist](https://www.youtube.com/watch?v=ymoG69TIFfY&list=PL2IwpYczGZhoSl0gAddW1bZFuBIALtw0m)
+Create live on [twitch](twitch.tv/thopdev)  
+Also check out my:  
+- [Twitter](twitter.com/thopdev)  
+- [Youtube](https://www.youtube.com/channel/UCFahGHoCA0ukPlSU1Y3ndqw)  
+- [Youtube playlist](https://www.youtube.com/watch?v=ymoG69TIFfY&list=PL2IwpYczGZhoSl0gAddW1bZFuBIALtw0m)  
 
 # Episodes:
 ## Episode 1.
