@@ -1,4 +1,7 @@
 # Todo App using Blazor and Azure functions with Table Storage!
+
+ToDo App is available [here](https://todo.thopdev.com/). 
+
 Create live on [twitch](twitch.tv/thopdev)  
 Also check out my:  
 - [Twitter](twitter.com/thopdev)  
