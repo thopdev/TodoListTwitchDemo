@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -33,11 +34,20 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.AddTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.User, "post", Route = null)] HttpRequest req, ClaimsPrincipal claims)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ClaimsPrincipal claims)
         {
-            var listId = claims.Identity.Name;
+            if (!claims.Identity.IsAuthenticated)
+            {
+                return new UnauthorizedResult();
+            }
 
-                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
+            var listId = claims.Identity.Name;
+            if (Debugger.IsAttached)
+            {
+                listId = "thopdev";
+            }
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
 
                 _cloudTable.Execute(TableOperation.Insert(new TodoListEntity

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,15 +30,25 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.UpdateTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.User, "put", Route = null)]
-            HttpRequest req, ClaimsPrincipal claimsPrincipal)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)]
+            HttpRequest req, ClaimsPrincipal claims)
         {
-            var listId = claimsPrincipal.Identity.Name;
+            if (!claims.Identity.IsAuthenticated)
+            {
+                return new UnauthorizedResult();
+            }
+
+            var listId = claims.Identity.Name;
+
+            if (Debugger.IsAttached)
+            {
+                listId = "thopdev";
+            }
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateTodoItemDto>(requestBody);
             var entity = _mapper.Map<TodoListEntity>(data);
-            entity.RowKey = listId;
+            entity.PartitionKey = listId;
             entity.ETag = "*";
 
             _cloudTable.Execute(TableOperation.Merge(entity));

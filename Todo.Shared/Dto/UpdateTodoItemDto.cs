@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Todo.Shared.Enums;
+﻿using Todo.Shared.Enums;
 
 namespace Todo.Shared.Dto
 {

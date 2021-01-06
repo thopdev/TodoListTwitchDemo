@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
-using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Entities
 {

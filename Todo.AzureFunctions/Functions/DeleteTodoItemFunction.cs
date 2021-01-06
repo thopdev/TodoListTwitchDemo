@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,19 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.DeleteTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.User, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{id}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{id}")]
             HttpRequest req, string id, ClaimsPrincipal claims)
         {
-            var listId = claims.Identity.Name;
+            if (!claims.Identity.IsAuthenticated)
+            {
+                return new UnauthorizedResult();
+            }
 
+            var listId = claims.Identity.Name;
+            if (Debugger.IsAttached)
+            {
+                listId = "thopdev";
+            }
 
             if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(listId))
             {

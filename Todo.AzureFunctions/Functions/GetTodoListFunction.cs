@@ -28,7 +28,7 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.GetTodoListFunction)]
         public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.User, "get", Route = null)]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
             HttpRequest req, ClaimsPrincipal claims)
         {
 
