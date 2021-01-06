@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
@@ -30,12 +29,15 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.UpdateTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)]
-            HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.User, "put", Route = null)]
+            HttpRequest req, ClaimsPrincipal claimsPrincipal)
         {
+            var listId = claimsPrincipal.Identity.Name;
+
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateTodoItemDto>(requestBody);
             var entity = _mapper.Map<TodoListEntity>(data);
+            entity.RowKey = listId;
             entity.ETag = "*";
 
             _cloudTable.Execute(TableOperation.Merge(entity));

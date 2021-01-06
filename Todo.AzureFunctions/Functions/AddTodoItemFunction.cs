@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -32,16 +33,16 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.AddTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.User, "post", Route = null)] HttpRequest req, ClaimsPrincipal claims)
         {
-       
+            var listId = claims.Identity.Name;
 
                 var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
 
                 _cloudTable.Execute(TableOperation.Insert(new TodoListEntity
                 {
-                    PartitionKey = data.ListId, RowKey = Guid.NewGuid().ToString(), Name = data.Name,
+                    PartitionKey = listId, RowKey = Guid.NewGuid().ToString(), Name = data.Name,
                     Priority = (int) data.Priority, Status = data.Status
                 }));
 

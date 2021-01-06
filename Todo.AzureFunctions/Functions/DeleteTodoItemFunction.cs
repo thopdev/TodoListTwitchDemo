@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -24,9 +25,12 @@ namespace Todo.AzureFunctions.Functions
 
         [FunctionName(FunctionConstants.DeleteTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{listId}/{id}")]
-            HttpRequest req, string listId, string id)
+            [HttpTrigger(AuthorizationLevel.User, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{id}")]
+            HttpRequest req, string id, ClaimsPrincipal claims)
         {
+            var listId = claims.Identity.Name;
+
+
             if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(listId))
             {
                 return new BadRequestObjectResult("Id or listId cannot be empty");
