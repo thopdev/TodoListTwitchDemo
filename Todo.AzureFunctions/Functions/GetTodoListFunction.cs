@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Web.Http;
 using AutoMapper;
@@ -30,7 +31,14 @@ namespace Todo.AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.User, "get", Route = null)]
             HttpRequest req, ClaimsPrincipal claims)
         {
+
             var listId = claims.Identity.Name;
+
+            if (Debugger.IsAttached)
+            {
+                listId = "thopdev";
+            }
+
 
             if (string.IsNullOrEmpty(listId))
             {

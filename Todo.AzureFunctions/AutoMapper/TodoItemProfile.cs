@@ -12,7 +12,6 @@ namespace Todo.AzureFunctions.AutoMapper
         public TodoItemProfile()
         {
             CreateMap<UpdateTodoItemDto, TodoListEntity>()
-                .ForMember(dest => dest.PartitionKey, opt => opt.MapFrom(src => src.ListId))
                 .ForMember(dest => dest.RowKey, opt => opt.MapFrom(src => src.Id));
             CreateMap<TodoListEntity, TodoItemDto>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RowKey));
         }

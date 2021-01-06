@@ -19,6 +19,7 @@ namespace Todo.Services
         public async Task<T> GetAsync<T>(string url)
         {
             var response =  await _httpClient.GetAsync(_httpClient.BaseAddress + "/" +  url);
+            Console.WriteLine(response.StatusCode + await response.Content.ReadAsStringAsync());
             var bodyString = await response.Content.ReadAsStringAsync();
             var body = JsonSerializer.Deserialize<T>(bodyString);
             

@@ -9,7 +9,7 @@ namespace Todo.AutoMapper
         public TodoItemProfile()
         {
             CreateMap<TodoItemDto, TodoItem>();
-            CreateMap<TodoItem, UpdateTodoItemDto>().ForMember(dest => dest.ListId, opt => opt.Ignore());
+            CreateMap<TodoItem, UpdateTodoItemDto>();
         }
     }
 }

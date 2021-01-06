@@ -29,11 +29,10 @@ namespace Todo.Services
         }
 
 
-        public async Task AddTodoItemAsync(Guid todoListId, TodoItem todoItem)
+        public async Task AddTodoItemAsync(TodoItem todoItem)
         {
             var dto = new NewTodoItemDto
             {
-                ListId = todoListId.ToString(),
                 Name = todoItem.Name,
                 Priority = todoItem.Priority,
                 Status = todoItem.Status
@@ -47,24 +46,21 @@ namespace Todo.Services
             await _localStorageService.SetItemAsync(StorageKey, todoList);
         }
 
-        public async Task UpdateItem(Guid id, TodoItem todoItem)
+        public async Task UpdateItem(TodoItem todoItem)
         {
             var dto = _mapper.Map<UpdateTodoItemDto>(todoItem);
-            dto.ListId = id.ToString();
 
             await _httpService.PutVoidAsync(FunctionConstants.UpdateTodoItemFunction, dto);
         }
 
-        public async Task DeleteItem(Guid listId, string id)
+        public async Task DeleteItem(string id)
         {
-            await _httpService.DeleteAsync($"{FunctionConstants.DeleteTodoItemFunction}/{listId}/{id}");
-
-
+            await _httpService.DeleteAsync($"{FunctionConstants.DeleteTodoItemFunction}/{id}");
         }
 
-        public async Task<IEnumerable<TodoItem>> GetList(Guid id)
+        public async Task<IEnumerable<TodoItem>> GetList()
         {
-            var dtos = await _httpService.GetAsync<List<TodoItemDto>>(FunctionConstants.GetTodoListFunction + $"?id={id}");
+            var dtos = await _httpService.GetAsync<List<TodoItemDto>>(FunctionConstants.GetTodoListFunction);
             Console.WriteLine(JsonSerializer.Serialize(dtos));
             var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
             return models;
@@ -83,7 +79,6 @@ namespace Todo.Services
             await _localStorageService.SetItemAsync(StorageIdKey, id);
             return id;
         }
-
 
     }
 }
