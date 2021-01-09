@@ -82,7 +82,7 @@ namespace Todo.AzureFunctions.Functions
             public IEnumerable<string> UserRoles { get; set; }
         }
 
-        public static ClaimsPrincipal Parse(HttpRequest req)
+        public static ClientPrincipal Parse(HttpRequest req)
         {
             var principal = new ClientPrincipal();
 
@@ -96,18 +96,7 @@ namespace Todo.AzureFunctions.Functions
 
             
             principal.UserRoles = principal.UserRoles?.Except(new string[] { "anonymous" }, StringComparer.CurrentCultureIgnoreCase);
-
-            if (!principal.UserRoles?.Any() ?? true)
-            {
-                return new ClaimsPrincipal();
-            }
-            
-            var identity = new ClaimsIdentity(principal.IdentityProvider);
-            // identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, principal.UserId));
-            // identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
-            // identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
-            //
-            return new ClaimsPrincipal(identity);
+            return principal;
         }
     }
 }
