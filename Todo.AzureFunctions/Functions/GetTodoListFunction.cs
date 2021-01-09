@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +19,7 @@ namespace Todo.AzureFunctions.Functions
     {
         private readonly CloudTable _cloudTable;
         private readonly IMapper _mapper;
+
         public GetTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper)
         {
             _mapper = mapper;
@@ -33,10 +30,8 @@ namespace Todo.AzureFunctions.Functions
         [FunctionName(FunctionConstants.GetTodoListFunction)]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
-            HttpRequest req)
+            HttpRequest req, ClaimsPrincipal claims)
         {
-            var claims = StaticWebAppsAuth.Parse(req);
-
             if (!claims.Identity.IsAuthenticated)
             {
                 return new UnauthorizedResult();
@@ -55,7 +50,8 @@ namespace Todo.AzureFunctions.Functions
                 return new BadRequestErrorMessageResult("Id cannot be empty");
             }
 
-            var query = new TableQuery<TodoListEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, listId));
+            var query = new TableQuery<TodoListEntity>().Where(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, listId));
 
             var todoList = _cloudTable.ExecuteQuery(query);
 
