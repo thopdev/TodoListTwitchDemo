@@ -36,6 +36,8 @@ namespace Todo.AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
             HttpRequest req, ClaimsPrincipal claims)
         {
+            return new OkObjectResult("Hi");
+
             try
             {
                 var header = StaticWebAppsAuth.Parse(req);
