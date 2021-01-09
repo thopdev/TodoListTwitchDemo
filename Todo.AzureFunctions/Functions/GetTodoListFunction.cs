@@ -36,8 +36,8 @@ namespace Todo.AzureFunctions.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
             HttpRequest req, ClaimsPrincipal claims)
         {
-            var header = req.Headers.TryGetValue("x-ms-client-principal", out var result);
-            return new OkObjectResult(result);
+            var header = StaticWebAppsAuth.Parse(req);
+            return new OkObjectResult(header);
 
             if (!claims.Identity.IsAuthenticated)
             {
