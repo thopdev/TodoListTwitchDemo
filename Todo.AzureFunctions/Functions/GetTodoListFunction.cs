@@ -94,10 +94,10 @@ namespace Todo.AzureFunctions.Functions
                 principal = JsonSerializer.Deserialize<ClientPrincipal>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
 
+            
+            principal.UserRoles = principal.UserRoles?.Except(new string[] { "anonymous" }, StringComparer.CurrentCultureIgnoreCase);
             return principal;
-            //
-            // principal.UserRoles = principal.UserRoles?.Except(new string[] { "anonymous" }, StringComparer.CurrentCultureIgnoreCase);
-            //
+
             // if (!principal.UserRoles?.Any() ?? true)
             // {
             //     return new ClaimsPrincipal();
