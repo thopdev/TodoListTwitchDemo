@@ -43,7 +43,7 @@ namespace Todo.AzureFunctions.Functions
             }
             catch (Exception e)
             {
-                return new OkObjectResult(e);
+                return new OkObjectResult(e.Message);
             }
 
             if (!claims.Identity.IsAuthenticated)
