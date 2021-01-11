@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Todo.AzureFunctions.Models;
 using Todo.AzureFunctions.Services.Interfaces;
+using Todo.Shared.Models;
 
 namespace Todo.AzureFunctions.Services
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -38,7 +37,7 @@ namespace Todo.Services
                 Status = todoItem.Status
             };
 
-            await _httpService.PostVoidAsync(FunctionConstants.AddTodoItemFunction, dto);
+            await _httpService.PostVoidAsync("api/" + FunctionConstants.AddTodoItemFunction, dto);
         }
 
         public async Task Save(IEnumerable<TodoItem> todoList)
@@ -50,17 +49,17 @@ namespace Todo.Services
         {
             var dto = _mapper.Map<UpdateTodoItemDto>(todoItem);
 
-            await _httpService.PutVoidAsync(FunctionConstants.UpdateTodoItemFunction, dto);
+            await _httpService.PutVoidAsync("api/" + FunctionConstants.UpdateTodoItemFunction, dto);
         }
 
         public async Task DeleteItem(string id)
         {
-            await _httpService.DeleteAsync($"{FunctionConstants.DeleteTodoItemFunction}/{id}");
+            await _httpService.DeleteAsync($"api/{FunctionConstants.DeleteTodoItemFunction}/{id}");
         }
 
         public async Task<IEnumerable<TodoItem>> GetList()
         {
-            var dtos = await _httpService.GetAsync<List<TodoItemDto>>(FunctionConstants.GetTodoListFunction);
+            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.GetTodoListFunction);
             Console.WriteLine(JsonSerializer.Serialize(dtos));
             var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
             return models;

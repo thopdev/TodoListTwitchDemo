@@ -3,8 +3,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Todo.AzureFunctions.Models;
 using Todo.AzureFunctions.Services.Interfaces;
+using Todo.Shared.Models;
 
 namespace Todo.AzureFunctions.Services
 {

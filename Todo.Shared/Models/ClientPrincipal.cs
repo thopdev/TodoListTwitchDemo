@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Todo.AzureFunctions.Models
+namespace Todo.Shared.Models
 {
     public class ClientPrincipal
     {

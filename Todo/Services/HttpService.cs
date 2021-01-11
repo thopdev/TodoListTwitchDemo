@@ -18,7 +18,7 @@ namespace Todo.Services
 
         public async Task<T> GetAsync<T>(string url)
         {
-            var response =  await _httpClient.GetAsync(_httpClient.BaseAddress + "/" +  url);
+            var response =  await _httpClient.GetAsync(_httpClient.BaseAddress + url);
             Console.WriteLine(response.StatusCode + await response.Content.ReadAsStringAsync());
             var bodyString = await response.Content.ReadAsStringAsync();
             var body = JsonSerializer.Deserialize<T>(bodyString);
@@ -28,12 +28,12 @@ namespace Todo.Services
 
         public async Task DeleteAsync(string url)
         {
-            await _httpClient.DeleteAsync(new Uri(_httpClient.BaseAddress + "/" + url));
+            await _httpClient.DeleteAsync(new Uri(_httpClient.BaseAddress + url));
         }
 
         public async Task PutVoidAsync(string url, object value)
         {
-            var response = await _httpClient.PutAsJsonAsync(new Uri(_httpClient.BaseAddress + "/" + url), value);
+            var response = await _httpClient.PutAsJsonAsync(new Uri(_httpClient.BaseAddress+ url), value);
             if (response.IsSuccessStatusCode)
             {
                 return;
@@ -55,7 +55,7 @@ namespace Todo.Services
 
         private async Task<HttpResponseMessage> PostAsync(string url, object value)
         {
-            var response = await _httpClient.PostAsJsonAsync(new Uri(_httpClient.BaseAddress + "/" + url), value);
+            var response = await _httpClient.PostAsJsonAsync(new Uri(_httpClient.BaseAddress  + url), value);
 
             if (response.IsSuccessStatusCode)
             {

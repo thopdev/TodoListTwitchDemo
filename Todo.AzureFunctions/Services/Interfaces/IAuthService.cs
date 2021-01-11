@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Todo.AzureFunctions.Models;
+using Todo.Shared.Models;
 
 namespace Todo.AzureFunctions.Services.Interfaces
 {

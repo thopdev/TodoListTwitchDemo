@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
+using Todo.Services.Interfaces;
 
 namespace Todo.Providers
 {
     public class CustomAuthenticationProvider : AuthenticationStateProvider
     {
-        public override Task<AuthenticationState> GetAuthenticationStateAsync()
-        {
-            var identity = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name, "mrfibuli"),
-            }, "Fake authentication type");
-            var user = new ClaimsPrincipal(identity);
+        private readonly IAuthService _authService;
 
-            return Task.FromResult(new AuthenticationState(user));
+        public CustomAuthenticationProvider(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            var principal = await _authService.CheckAuthentication();
+
+            var identity = new ClaimsIdentity(principal.IdentityProvider);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, principal.UserId));
+            identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
+            identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
+
+            return new AuthenticationState(new ClaimsPrincipal(identity));
         }
     }
 }
