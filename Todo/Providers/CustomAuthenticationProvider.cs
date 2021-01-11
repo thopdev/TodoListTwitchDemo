@@ -19,21 +19,17 @@ namespace Todo.Providers
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-
-
             var principal = await _authService.CheckAuthentication();
-            
-            Console.WriteLine(JsonSerializer.Serialize(principal));
+            if (principal == null)
+            {
+                return new AuthenticationState(new ClaimsPrincipal());
+            }
             
             var identity = new ClaimsIdentity(principal.IdentityProvider);
-            Console.WriteLine("Provider");
             identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
-            Console.WriteLine("name");
             identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
-            Console.WriteLine("roles");
 
             var claimsPrincipal = new ClaimsPrincipal(identity);
-            Console.WriteLine("claims");
 
             return new AuthenticationState(claimsPrincipal);
         }
