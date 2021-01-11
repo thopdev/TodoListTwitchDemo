@@ -17,9 +17,11 @@ namespace Todo
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
+#if Release
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress + "api") });
-
+#else
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7071/api") });
+#endif
             builder.Services.AddServices();
 
             await builder.Build().RunAsync();

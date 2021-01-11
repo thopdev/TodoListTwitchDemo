@@ -1,0 +1,4 @@
+{
+  "route": "/api/*",
+  "allowedRoles": [ "authenticated" ]
+}

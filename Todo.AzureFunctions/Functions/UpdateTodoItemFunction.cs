@@ -1,17 +1,15 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Security.Claims;
+﻿using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
 using Todo.AzureFunctions.Entities;
 using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto;
 
@@ -21,29 +19,23 @@ namespace Todo.AzureFunctions.Functions
     {
         private readonly CloudTable _cloudTable;
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
 
-        public UpdateTodoItemFunction(ICloudTableFactory cloudTableFactory, IMapper mapper)
+        public UpdateTodoItemFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;
+            _authService = authService;
             _cloudTable = cloudTableFactory.CreateCloudTable();
         }
 
         [FunctionName(FunctionConstants.UpdateTodoItemFunction)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)]
-            HttpRequest req, ClaimsPrincipal claims)
+            HttpRequest req)
         {
-            if (!claims.Identity.IsAuthenticated)
-            {
-                return new UnauthorizedResult();
-            }
+            var user = _authService.GetClientPrincipalFromRequest(req);
 
-            var listId = claims.Identity.Name;
-
-            if (Debugger.IsAttached)
-            {
-                listId = "thopdev";
-            }
+            var listId = user.UserId;
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateTodoItemDto>(requestBody);
