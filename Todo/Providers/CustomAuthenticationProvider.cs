@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -18,13 +19,20 @@ namespace Todo.Providers
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var principal = await _authService.CheckAuthentication();
-
+            Console.WriteLine("Set principle");
             var identity = new ClaimsIdentity(principal.IdentityProvider);
+            Console.WriteLine("Provider");
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, principal.UserId));
+            Console.WriteLine("nameid");
             identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
+            Console.WriteLine("name");
             identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
+            Console.WriteLine("roles");
 
-            return new AuthenticationState(new ClaimsPrincipal(identity));
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            Console.WriteLine("claims");
+
+            return new AuthenticationState(claimsPrincipal);
         }
     }
 }
