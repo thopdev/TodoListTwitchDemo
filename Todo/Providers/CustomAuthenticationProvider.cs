@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Todo.Services.Interfaces;
@@ -18,7 +19,12 @@ namespace Todo.Providers
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
+
+
             var principal = await _authService.CheckAuthentication();
+            
+            Console.WriteLine(JsonSerializer.Serialize(principal));
+            
             Console.WriteLine("Set principle");
             var identity = new ClaimsIdentity(principal.IdentityProvider);
             Console.WriteLine("Provider");
