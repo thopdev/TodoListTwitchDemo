@@ -16,7 +16,7 @@ namespace Todo.Services
 
         public async Task<ClientPrincipal> CheckAuthentication()
         {
-            return await _httpService.GetAsync<ClientPrincipal>(".auth/me");
+            return (await _httpService.GetAsync<AuthResponse>(".auth/me")).ClientPrincipal;
         }
     }
 }

@@ -25,7 +25,6 @@ namespace Todo.Providers
             
             Console.WriteLine(JsonSerializer.Serialize(principal));
             
-            Console.WriteLine("Set principle");
             var identity = new ClaimsIdentity(principal.IdentityProvider);
             Console.WriteLine("Provider");
             identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
