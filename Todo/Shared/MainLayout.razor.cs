@@ -7,7 +7,7 @@ namespace Todo.Shared
 {
     public partial class MainLayout
     {
-        public LoginProvider[] LoginProviders { get; } = { new LoginProvider("Twitter", "TwitterLogo.svg"), new LoginProvider("Google", "GoogleLogo.svg"), new LoginProvider("Microsoft", "MicrosoftLogo.svg"), new LoginProvider("Facebook", "FacebookLogo.svg") };
+        public LoginProvider[] LoginProviders { get; } = { new LoginProvider("Twitter", "TwitterLogo.svg"), new LoginProvider("Google", "GoogleLogo.svg"), new LoginProvider("Microsoftaccount", "MicrosoftLogo.svg"), new LoginProvider("Facebook", "FacebookLogo.svg") };
     }
 
 
