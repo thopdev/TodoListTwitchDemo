@@ -22,8 +22,6 @@ namespace Todo.Providers
             Console.WriteLine("Set principle");
             var identity = new ClaimsIdentity(principal.IdentityProvider);
             Console.WriteLine("Provider");
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, principal.UserId));
-            Console.WriteLine("nameid");
             identity.AddClaim(new Claim(ClaimTypes.Name, principal.UserDetails));
             Console.WriteLine("name");
             identity.AddClaims(principal.UserRoles.Select(r => new Claim(ClaimTypes.Role, r)));
