@@ -21,7 +21,7 @@ namespace Todo.Services
             var response =  await _httpClient.GetAsync(_httpClient.BaseAddress + url);
             Console.WriteLine(response.StatusCode + await response.Content.ReadAsStringAsync());
             var bodyString = await response.Content.ReadAsStringAsync();
-            var body = JsonSerializer.Deserialize<T>(bodyString);
+            var body = JsonSerializer.Deserialize<T>(bodyString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             
             return body;
         }
