@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Todo.Models;
-using Todo.Shared.Dto;
+using Todo.Shared.Dto.TodoItems;
 
 namespace Todo.AutoMapper
 {

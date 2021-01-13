@@ -1,6 +1,6 @@
 ﻿using Todo.Shared.Enums;
 
-namespace Todo.Shared.Dto
+namespace Todo.Shared.Dto.TodoItems
 {
     public class UpdateTodoItemDto
     {

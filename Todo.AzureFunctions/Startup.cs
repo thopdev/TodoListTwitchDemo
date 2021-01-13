@@ -7,6 +7,7 @@ using Todo.AzureFunctions;
 using Microsoft.Extensions.Configuration;
 using Todo.AzureFunctions.Appsettings;
 using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services;
 using Todo.AzureFunctions.Services.Interfaces;
 

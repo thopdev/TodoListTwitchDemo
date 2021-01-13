@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
 using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 
-namespace Todo.AzureFunctions.Functions
+namespace Todo.AzureFunctions.Functions.TodoItems
 {
     public class DeleteTodoItemFunction
     {
@@ -20,7 +22,7 @@ namespace Todo.AzureFunctions.Functions
         public DeleteTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService)
         {
             _authService = authService;
-            _cloudTable = cloudTableFactory.CreateCloudTable();
+            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
         }
 
         [FunctionName(FunctionConstants.DeleteTodoItemFunction)]
@@ -36,8 +38,8 @@ namespace Todo.AzureFunctions.Functions
                 return new BadRequestObjectResult("Id or listId cannot be empty");
             }
 
-            var result = await _cloudTable.ExecuteAsync(TableOperation.Retrieve<TodoListEntity>(listId, id));
-            if (result?.Result is TodoListEntity entity)
+            var result = await _cloudTable.ExecuteAsync(TableOperation.Retrieve<TodoItemEntity>(listId, id));
+            if (result?.Result is TodoItemEntity entity)
             {
                 _cloudTable.Execute(TableOperation.Delete(entity));
             }

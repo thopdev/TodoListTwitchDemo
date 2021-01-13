@@ -1,0 +1,21 @@
+﻿@page "/todolist/overview"
+
+<div class="flex w-full flex-wrap gap-2">    
+    @if (TodoLists != null)
+    {
+        <NewTodoListComponent OnCreate="NewTodoList"/>
+        @foreach (var todoList in TodoLists)
+        {
+            <TodoListComponent OnChange="NewTodoList" OnDelete="Delete" TodoList="@todoList"/>
+
+
+        }
+    }
+    else
+    {
+        <div class="w-full h-full flex justify-center flex-wrap content-center">
+
+            <LoaderComponent/>
+        </div>
+    }
+</div>    

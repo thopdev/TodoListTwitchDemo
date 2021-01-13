@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Todo.Models;
 using Todo.Models.Forms;
 
-namespace Todo.Pages
+namespace Todo.Pages.TodoListItems
 {
     public partial class NewTodoItemComponent
     {

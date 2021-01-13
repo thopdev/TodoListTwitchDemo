@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Todo.Shared.Enums;
 
-namespace Todo.Shared.Dto
+namespace Todo.Shared.Dto.TodoItems
 {
     public class TodoItemDto
     {

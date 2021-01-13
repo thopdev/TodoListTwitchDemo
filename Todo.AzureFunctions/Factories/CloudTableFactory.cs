@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Azure.Cosmos.Table;
+﻿using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Options;
 using Todo.AzureFunctions.Appsettings;
-using Todo.AzureFunctions.Constants;
+using Todo.AzureFunctions.Factories.Factories;
 
 namespace Todo.AzureFunctions.Factories
 {
@@ -18,7 +15,7 @@ namespace Todo.AzureFunctions.Factories
         }
 
 
-        public CloudTable CreateCloudTable()
+        public CloudTable CreateCloudTable(string tableName)
         {
             var storageAccount =
                 CloudStorageAccount.Parse(_storageSettings.Account);
@@ -26,7 +23,7 @@ namespace Todo.AzureFunctions.Factories
             // Create the table client.
             var tableClient = storageAccount.CreateCloudTableClient();
 
-            var cloudTable = tableClient.GetTableReference(TableStorageConstants.TodoListTable);
+            var cloudTable = tableClient.GetTableReference(tableName);
             cloudTable.CreateIfNotExists();
             return cloudTable;
         }

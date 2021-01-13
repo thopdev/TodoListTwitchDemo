@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Todo.AzureFunctions.Entities;
-using Todo.Shared.Dto;
+using Todo.Shared.Dto.TodoItems;
 
 namespace Todo.AzureFunctions.AutoMapper
 {
@@ -11,11 +8,11 @@ namespace Todo.AzureFunctions.AutoMapper
     {
         public TodoItemProfile()
         {
-            CreateMap<UpdateTodoItemDto, TodoListEntity>()
+            CreateMap<UpdateTodoItemDto, TodoItemEntity>()
                 .ForMember(dest => dest.RowKey, opt => opt.MapFrom(src => src.Id));
-            CreateMap<TodoListEntity, TodoItemDto>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RowKey));
+            
+            CreateMap<TodoItemEntity, TodoItemDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RowKey));
         }
-
-
     }
 }

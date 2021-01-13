@@ -1,9 +1,9 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 
-namespace Todo.AzureFunctions.Factories
+namespace Todo.AzureFunctions.Factories.Factories
 {
     public interface ICloudTableFactory
     {
-        CloudTable CreateCloudTable();
+        CloudTable CreateCloudTable(string tableName);
     }
 }

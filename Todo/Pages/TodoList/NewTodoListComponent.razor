@@ -1,0 +1,12 @@
+﻿<div class="w-full mt-2">
+
+    <EditForm Model="@TodoList" OnValidSubmit="OnSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="w-full h-16 flex">
+            <button type="submit" class="hop-cursor rounded-l h-full bg-green-500 px-4 shadow font-medium text-white">Add</button>
+            <InputText placeholder="New todo list" id="Text" class="w-full rounded-r h-full shadow font-bold pl-2" @bind-Value="TodoList.Name"></InputText>
+        </div>
+        <ValidationSummary class="text-red-500" />
+    </EditForm>
+    </div>

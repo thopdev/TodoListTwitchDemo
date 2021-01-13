@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
-using Todo.Shared.Dto;
+using Todo.Shared.Dto.TodoLists;
 
-namespace Todo.AzureFunctions.Functions
+namespace Todo.AzureFunctions.Functions.TodoLists
 {
     public class GetTodoListFunction
     {
@@ -24,7 +25,7 @@ namespace Todo.AzureFunctions.Functions
         {
             _mapper = mapper;
             _authService = authService;
-            _cloudTable = cloudTableFactory.CreateCloudTable();
+            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
         }
 
 
@@ -36,7 +37,6 @@ namespace Todo.AzureFunctions.Functions
             var user = _authService.GetClientPrincipalFromRequest(req);
             var listId = user.UserId;
 
-
             if (string.IsNullOrEmpty(listId))
             {
                 return new BadRequestErrorMessageResult("Id cannot be empty");
@@ -47,7 +47,7 @@ namespace Todo.AzureFunctions.Functions
 
             var todoList = _cloudTable.ExecuteQuery(query);
 
-            return new OkObjectResult(_mapper.Map<IEnumerable<TodoItemDto>>(todoList));
+            return new OkObjectResult(_mapper.Map<IEnumerable<TodoListDto>>(todoList));
         }
     }
 }

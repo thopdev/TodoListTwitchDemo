@@ -7,13 +7,15 @@ using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
+using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
 using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
-using Todo.Shared.Dto;
+using Todo.Shared.Dto.TodoItems;
 
-namespace Todo.AzureFunctions.Functions
+namespace Todo.AzureFunctions.Functions.TodoItems
 {
     public class UpdateTodoItemFunction
     {
@@ -25,7 +27,7 @@ namespace Todo.AzureFunctions.Functions
         {
             _mapper = mapper;
             _authService = authService;
-            _cloudTable = cloudTableFactory.CreateCloudTable();
+            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
         }
 
         [FunctionName(FunctionConstants.UpdateTodoItemFunction)]
@@ -39,7 +41,7 @@ namespace Todo.AzureFunctions.Functions
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateTodoItemDto>(requestBody);
-            var entity = _mapper.Map<TodoListEntity>(data);
+            var entity = _mapper.Map<TodoItemEntity>(data);
             entity.PartitionKey = listId;
             entity.ETag = "*";
 

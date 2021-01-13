@@ -5,6 +5,8 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Plk.Blazor.DragDrop;
+using Todo.Factories;
+using Todo.Factories.Interfaces;
 using Todo.Providers;
 using Todo.Services;
 using Todo.Services.Interfaces;
@@ -25,8 +27,9 @@ namespace Todo.Extensions
             services.AddAutoMapper(typeof(Program));
 
             services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<ITodoItemService, TodoItemService>();
+            services.AddScoped<ILoaderItemFactory, LoaderItemFactory>();
             services.AddScoped<ITodoListService, TodoListService>();
-
 
 
             return services;

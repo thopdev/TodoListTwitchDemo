@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Todo.Models;
 using Todo.Services.Interfaces;
 
-namespace Todo.Pages
+namespace Todo.Pages.TodoListItems
 {
-    public partial class TodoListComponent
+    public partial class TodoListItemsComponent
     {
         [Inject]
-        public ITodoListService TodoListService { get; set; }
+        public ITodoItemService TodoItemService { get; set; }
 
         [Parameter] public bool DisplayChecked { get; set; }
 
@@ -24,25 +21,25 @@ namespace Todo.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            ListGuid = await TodoListService.GetListId();
-            TodoItems =  new ObservableCollection<TodoItem>((await TodoListService.GetList()));
+            ListGuid = await TodoItemService.GetListId();
+            TodoItems =  new ObservableCollection<TodoItem>((await TodoItemService.GetList()));
         }
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
-            TodoListService.AddTodoItemAsync(todoItem);
+            TodoItemService.AddTodoItemAsync(todoItem);
             TodoItems.Insert(0, todoItem);
         }
 
         public async Task RemoveFromTodoList(TodoItem item)
         {
             TodoItems.Remove(item);
-            await TodoListService.DeleteItem(item.Id);
+            await TodoItemService.DeleteItem(item.Id);
         }
 
         public async Task Update(TodoItem item)
         {
-            await TodoListService.UpdateItem(item);
+            await TodoItemService.UpdateItem(item);
         }
     }
 }
