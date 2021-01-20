@@ -19,26 +19,35 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         private readonly CloudTable _cloudTable;
         private readonly IAuthService _authService;
 
-        public DeleteTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService)
+        private readonly ITodoListService _todoListService;
+
+        public DeleteTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService, ITodoListService todoListService)
         {
             _authService = authService;
+            _todoListService = todoListService;
             _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
         }
 
         [FunctionName(FunctionConstants.DeleteTodoItemFunction)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{id}")]
-            HttpRequest req, string id, ClaimsPrincipal claims)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.DeleteTodoItemFunction + "/{listId}/{itemId}")]
+            HttpRequest req,
+            string listId, 
+            string itemId)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-            var listId = user.UserId;
 
-            if (string.IsNullOrEmpty(id))
+            if (!_todoListService.CanUserAccessList(user, listId))
+            {
+                return new UnauthorizedResult();
+            }
+
+            if (string.IsNullOrEmpty(itemId))
             {
                 return new BadRequestObjectResult("Id or listId cannot be empty");
             }
 
-            var result = await _cloudTable.ExecuteAsync(TableOperation.Retrieve<TodoItemEntity>(listId, id));
+            var result = await _cloudTable.ExecuteAsync(TableOperation.Retrieve<TodoItemEntity>(listId, itemId));
             if (result?.Result is TodoItemEntity entity)
             {
                 _cloudTable.Execute(TableOperation.Delete(entity));

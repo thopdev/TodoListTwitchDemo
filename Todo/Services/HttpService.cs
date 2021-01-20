@@ -45,6 +45,14 @@ namespace Todo.Services
         public async Task<T> PostAsync<T>(string url, object value)
         {
             var response = await PostAsync(url, value);
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (typeof(T) == typeof(string))
+            {
+
+                return (T)(object) result;
+            }
+
             return JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync());
         }
 

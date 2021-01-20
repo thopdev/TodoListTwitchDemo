@@ -7,11 +7,9 @@ namespace Todo.Services.Interfaces
 {
     public interface ITodoItemService
     {
-        Task AddTodoItemAsync(TodoItem todoItem);
-        Task Save(IEnumerable<TodoItem> todoList);
-        Task<IEnumerable<TodoItem>> GetList();
-        Task UpdateItem(TodoItem todoItem);
-        Task<Guid> GetListId();
-        Task DeleteItem(string id);
+        Task AddTodoItemAsync(string listId, TodoItem todoItem);
+        Task<IEnumerable<TodoItem>> GetList(string listId);
+        Task UpdateItem(string listId, TodoItem todoItem);
+        Task DeleteItem(string listId, string id);
     }
 }

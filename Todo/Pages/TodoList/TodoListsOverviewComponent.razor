@@ -6,7 +6,7 @@
         <NewTodoListComponent OnCreate="NewTodoList"/>
         @foreach (var todoList in TodoLists)
         {
-            <TodoListComponent OnChange="NewTodoList" OnDelete="Delete" TodoList="@todoList"/>
+            <TodoListComponent OnChange="Update" OnDelete="Delete" TodoList="@todoList"/>
 
 
         }

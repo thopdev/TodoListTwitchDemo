@@ -13,6 +13,9 @@ namespace Todo.AzureFunctions.AutoMapper
 
             CreateMap<NewTodoListDto, TodoListEntity>();
 
+            CreateMap<UpdateTodoListDto, TodoListEntity>()
+                .ForMember(dest => dest.RowKey, opt => opt.MapFrom(src => src.Id));
+
         }
     }
 }

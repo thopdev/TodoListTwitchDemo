@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -20,30 +22,33 @@ namespace Todo.AzureFunctions.Functions.TodoLists
         private readonly CloudTable _cloudTable;
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
+        private readonly ITodoListService _todoListService;
 
-        public GetTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService)
+        public GetTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService, ITodoListService todoListService)
         {
             _mapper = mapper;
             _authService = authService;
+            _todoListService = todoListService;
             _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
         }
 
 
         [FunctionName(FunctionConstants.GetTodoListFunction)]
         public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get")]
             HttpRequest req)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-            var listId = user.UserId;
 
-            if (string.IsNullOrEmpty(listId))
+            var userId = user.UserId;
+
+            if (string.IsNullOrEmpty(userId))
             {
                 return new BadRequestErrorMessageResult("Id cannot be empty");
             }
 
             var query = new TableQuery<TodoListEntity>().Where(
-                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, listId));
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, userId));
 
             var todoList = _cloudTable.ExecuteQuery(query);
 

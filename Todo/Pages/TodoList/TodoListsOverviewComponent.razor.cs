@@ -14,18 +14,22 @@ namespace Todo.Pages.TodoList
 
         protected override async Task OnInitializedAsync()
         {
-            TodoLists = (await TodoListService.GetAllLists()).ToList();
+            TodoLists = await TodoListService.GetAllLists();
         }
 
         public async Task NewTodoList(Models.TodoList todoList)
         {
-            TodoLists.Insert(0, todoList);
             await TodoListService.Add(todoList);
         }
 
         public void Delete(Models.TodoList todoList)
         {
-            TodoLists.Remove(todoList);
+            TodoListService.Delete(todoList);
+        }
+
+        public void Update(Models.TodoList todoList)
+        {
+            TodoListService.Update(todoList);
         }
 
     }

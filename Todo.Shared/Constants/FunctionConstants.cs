@@ -9,6 +9,8 @@
 
         public const string GetTodoListFunction = "GetTodoLists";
         public const string AddTodoListFunction = "AddTodoLists";
+        public const string UpdateTodoListFunction = "UpdateTodoList";
+        public const string DeleteTodoListFunction = "DeleteTodoList";
 
 
     }

@@ -51,7 +51,9 @@ namespace Todo.AzureFunctions
                 builder.Services.AddScoped<IAuthService, AuthService>();
             }
 
+            builder.Services.AddScoped<ITodoItemService, TodoItemService>();
 
+            builder.Services.AddScoped<ITodoListService, TodoListService>();
 
         }
     }

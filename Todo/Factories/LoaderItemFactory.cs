@@ -11,7 +11,7 @@ namespace Todo.Factories
         public LoaderItem CreateRandomItem()
         {
             var random = new Random();
-            var randomNumber = random.Next(0, 3);
+            var randomNumber = random.Next(0, 4);
 
             return randomNumber switch
             {
@@ -21,6 +21,7 @@ namespace Todo.Factories
                     "https://assets4.lottiefiles.com/packages/lf20_yjL4ri.json"),
                 2 => new LoaderItem("A burger a day keeps the stress away!",
                     "https://assets4.lottiefiles.com/packages/lf20_FXggV8.json"),
+                3 => new LoaderItem("Run away doo doo doo doo doo doo", "https://assets5.lottiefiles.com/temporary_files/aZ3MXG.json", "lisejojo"),
                 _ => new LoaderItem("Don't mind me. Just grabbing a coffee while is loads!",
                     "https://assets4.lottiefiles.com/packages/lf20_0E84Ic.json")
             };

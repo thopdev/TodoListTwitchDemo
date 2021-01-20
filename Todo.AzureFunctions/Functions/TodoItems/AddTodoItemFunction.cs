@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,12 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         private readonly CloudTable _cloudTable;
         private readonly IAuthService _authService;
 
-        public AddTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService)
+        private readonly ITodoListService _todoListService;
+
+        public AddTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService, ITodoListService todoItemService)
         {
             _authService = authService;
+            _todoListService = todoItemService;
             _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
         }
 
@@ -34,22 +38,30 @@ namespace Todo.AzureFunctions.Functions.TodoItems
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-
-            var listId = user.UserId;
+            
             var rowKey = Guid.NewGuid().ToString();
 
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
-            
+            var data = JsonConvert.DeserializeObject<NewTodoItemDto>(requestBody);
+            var listId = data.ListId;
 
-                _cloudTable.Execute(TableOperation.Insert(new TodoItemEntity
+            if (data.ListId == null)
+            {
+                return new BadRequestResult();
+            }
+
+            if (!_todoListService.CanUserAccessList(user, listId))
+            {
+                return new UnauthorizedResult();
+            }
+
+            _cloudTable.Execute(TableOperation.Insert(new TodoItemEntity
                 {
                     PartitionKey = listId, RowKey = rowKey, Name = data.Name,
                     Priority = (int) data.Priority, Status = data.Status
                 }));
 
                 return new OkObjectResult(rowKey);
-
-            } 
+        } 
     }
 }
