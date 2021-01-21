@@ -1,7 +1,7 @@
 ﻿<nav class="flex items-center justify-between flex-wrap bg-green-500 p-6">
     <div class="flex items-center flex-no-shrink text-white mr-6">
 
-        <img class="w-16" src="/images/ThomasLogo.png" />
+        <img class="transition duration-1000 ease-in-out w-16 transform hover:-translate-y-1 hover:scale-150 hover:rotate-720" src="/images/ThomasLogo.png" />
         <span class="font-semibold text-xl tracking-tight">Todo App</span>
     </div>
     <div class="block lg:hidden">
@@ -12,11 +12,24 @@
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
             <NavLink class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" href="" Match="NavLinkMatch.All">
-                Todo
+                Home
             </NavLink>
-            <NavLink class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" href="completed" Match="NavLinkMatch.Prefix">
-            Completed
+            @if (TodoLists != null)
+            {
+                @foreach (var list in TodoLists)
+                {
+                    <NavLink class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" href="@("list/" + @list.Id)" Match="NavLinkMatch.Prefix">
+                        @list.Name
+                    </NavLink>
+                }
+            }
+            <NavLink class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" href="todolist/overview" Match="NavLinkMatch.Prefix">
+                Manage List
             </NavLink>
         </div>
     </div>
+    <a href=".auth/logout" class="w-auto justify-self-end text-xl text-white font-semibold">
+
+        @UserName
+    </a>
 </nav>

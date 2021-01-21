@@ -1,54 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
+using AutoMapper;
 using Todo.Models;
 using Todo.Services.Interfaces;
 using Todo.Shared.Constants;
-using Todo.Shared.Dto;
+using Todo.Shared.Dto.TodoLists;
 
 namespace Todo.Services
 {
     public class TodoListService : ITodoListService
     {
-        private const string StorageKey = "todoList";
-        private readonly ILocalStorageService _localStorageService;
         private readonly IHttpService _httpService;
+        private readonly IMapper _mapper;
 
-        public TodoListService(ILocalStorageService localStorageService, IHttpService httpService)
+        private  List<Models.TodoList> _todoLists;
+        private Task<IEnumerable<TodoListDto>> _response;
+
+        public delegate void ToDoListChangedHandler();
+
+        public event ToDoListChangedHandler OnTodoListChange;
+
+        public TodoListService(IHttpService httpService, IMapper mapper)
         {
-            _localStorageService = localStorageService;
             _httpService = httpService;
+            _mapper = mapper;
         }
 
 
-        public async Task AddTodoItemAsync(TodoItem todoItem)
+        public async Task<List<TodoList>> GetAllLists()
         {
-            var dto = new TodoItemDto
+            if (_response != null)
             {
-                Name = todoItem.Name,
-                Priority = todoItem.Priority,
-                Status = todoItem.Status
-            };
-
-            await _httpService.PostVoidAsync(FunctionConstants.AddTodoItemFunction, dto);
-        }
-
-        public async Task Save(IEnumerable<TodoItem> todoList)
-        {
-            await _localStorageService.SetItemAsync(StorageKey, todoList);
-        }
-
-        public async Task<IEnumerable<TodoItem>> Get()
-        {
-            if (await _localStorageService.ContainKeyAsync(StorageKey))
+                await _response;
+            }
+            else
             {
-                return await _localStorageService.GetItemAsync<IEnumerable<TodoItem>>(StorageKey);
-
+                _response =
+                    _httpService.GetAsync<IEnumerable<TodoListDto>>(
+                        "api/" + FunctionConstants.GetTodoListFunction);
             }
 
-            return new List<TodoItem>{new TodoItem{Name = "Fill up your todo list!"}};
+            return _todoLists ?? (_todoLists = _mapper.Map<IEnumerable<TodoList>>(await _response).ToList());
         }
 
+        public async Task Add(TodoList todoList)
+        {
+            var list = await GetAllLists();
+            list.Insert(0, todoList);
+            var result = await _httpService.PostAsync<string>("api/" + FunctionConstants.AddTodoListFunction, todoList);
+            todoList.Id = result;
+            OnOnTodoListChange();
+        }
 
+        public async Task Update(TodoList todoList)
+        {
+            await _httpService.PutVoidAsync("api/" + FunctionConstants.UpdateTodoListFunction, todoList);
+            OnOnTodoListChange();
+        }
+
+        public async Task Delete(TodoList todoItem)
+        {
+            var list = await GetAllLists();
+            list.Remove(todoItem);
+            await _httpService.DeleteAsync("api/" + FunctionConstants.DeleteTodoListFunction + "/" + todoItem.Id);
+            OnOnTodoListChange();
+        }
+
+        protected virtual void OnOnTodoListChange()
+        {
+            OnTodoListChange?.Invoke();
+        }
     }
 }

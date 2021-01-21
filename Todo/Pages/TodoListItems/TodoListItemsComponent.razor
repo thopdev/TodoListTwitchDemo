@@ -1,0 +1,18 @@
+﻿@if (TodoItems != null)
+{
+    <div class="flex w-full flex-wrap gap-2">
+        <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
+        @foreach (var item in TodoItems)
+        {
+            <TodoItemComponent TodoItem="@item" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+        }
+
+    </div>
+}
+else
+{
+    
+    <div class="w-full h-full flex justify-center flex-wrap content-center">
+        <LoaderComponent/>
+    </div>
+}

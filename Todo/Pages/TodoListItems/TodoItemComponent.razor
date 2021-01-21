@@ -1,6 +1,6 @@
 ﻿@using Todo.Models
 @using Todo.Shared.Enums
-<div class="w-full h-24 rounded flex flex-wrap content-center shadow justify-items-stretch @GetPriorityColor()">
+<div class="w-full h-24 rounded flex flex-wrap content-center shadow justify-items-stretch  @GetPriorityColor()">
     <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@TodoItem.Status" />
     
     @if (Editing)
@@ -19,8 +19,8 @@
     else
     {
         <label class="m-4 w-4/5 h-8 text-lg font-medium">@TodoItem.Name</label>
-        <button class="shadow rounded mr-4 h-auto px-4" @onclick="Edit">Edit</button>
-        <button class="shadow rounded h-auto px-4" @onclick="Delete">Delete</button>
+        <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Edit">Edit</button>
+        <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Delete">Delete</button>
 
     }
 </div>

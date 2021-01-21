@@ -4,6 +4,11 @@
 
 @tailwind utilities;
 
+
+.hop-cursor {
+    cursor: url(/images/ThomasLogo.png), auto;
+               
+} 
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

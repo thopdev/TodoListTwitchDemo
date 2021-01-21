@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Todo.Models;
 using Todo.Shared.Enums;
 
-namespace Todo.Pages
+namespace Todo.Pages.TodoListItems
 {
     public partial class TodoItemComponent
     {

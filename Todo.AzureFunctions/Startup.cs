@@ -1,11 +1,15 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using AutoMapper;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Todo.AzureFunctions;
 using Microsoft.Extensions.Configuration;
 using Todo.AzureFunctions.Appsettings;
 using Todo.AzureFunctions.Factories;
+using Todo.AzureFunctions.Factories.Factories;
+using Todo.AzureFunctions.Services;
+using Todo.AzureFunctions.Services.Interfaces;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -36,6 +40,21 @@ namespace Todo.AzureFunctions
                 });
 
             builder.Services.AddScoped<ICloudTableFactory, CloudTableFactory>();
+            builder.Services.AddAutoMapper(GetType());
+
+            if (Debugger.IsAttached)
+            {
+                builder.Services.AddScoped<IAuthService, DebugAuthService>();
+            }
+            else
+            {
+                builder.Services.AddScoped<IAuthService, AuthService>();
+            }
+
+            builder.Services.AddScoped<ITodoItemService, TodoItemService>();
+
+            builder.Services.AddScoped<ITodoListService, TodoListService>();
+
         }
     }
 }
