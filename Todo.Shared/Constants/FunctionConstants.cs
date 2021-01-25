@@ -2,15 +2,28 @@
 {
     public class FunctionConstants
     {
-        public const string AddTodoItemFunction = "AddTodoItem";
-        public const string GetItemsOfTodoListFunction = "GetItemsOfTodoList";
-        public const string UpdateTodoItemFunction = "UpdateTodoItem";
-        public const string DeleteTodoItemFunction = "DeleteTodoItem";
+        public class TodoItem
+        {
+            public const string Get = "GetItemsOfTodoList";
+            public const string Add = "AddTodoItem";
+            public const string Update = "UpdateTodoItem";
+            public const string Delete = "DeleteTodoItem";
+        }
 
-        public const string GetTodoListFunction = "GetTodoLists";
-        public const string AddTodoListFunction = "AddTodoLists";
-        public const string UpdateTodoListFunction = "UpdateTodoList";
-        public const string DeleteTodoListFunction = "DeleteTodoList";
+        public class TodoList
+        {
+            public const string Get = "GetTodoLists";
+            public const string Add = "AddTodoLists";
+            public const string Update = "UpdateTodoList";
+            public const string Delete = "DeleteTodoList";
+
+            public class Members
+            {
+                public const string Add = "AddMemberToTodoList";
+                public const string Remove = "RemoveMemberFromTodoList";
+            }
+        }
+
 
 
     }

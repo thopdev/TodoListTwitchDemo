@@ -6,5 +6,9 @@
         public const string TodoListTable = "TodoList";
 
 
+
+        public const string PartitionKey = "PartionKey";
+        public const string RowKey = "RowKey";
+
     }
 }

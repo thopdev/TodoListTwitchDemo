@@ -9,7 +9,6 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
 using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories;
 using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
@@ -29,10 +28,10 @@ namespace Todo.AzureFunctions.Functions.TodoItems
             _mapper = mapper;
             _authService = authService;
             _todoListService = todoListService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoItemEntity>();
         }
 
-        [FunctionName(FunctionConstants.UpdateTodoItemFunction)]
+        [FunctionName(FunctionConstants.TodoItem.Update)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)]
             HttpRequest req)

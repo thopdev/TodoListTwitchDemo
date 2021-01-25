@@ -1,5 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Todo.Models;
+using Todo.Services.Interfaces;
+using Todo.Shared.Dto.TodoLists.Members;
 
 namespace Todo.Pages.TodoList
 {
@@ -12,6 +17,9 @@ namespace Todo.Pages.TodoList
         [Parameter] public EventCallback<Models.TodoList> OnChange { get; set; }
         [Parameter] public EventCallback<Models.TodoList> OnDelete { get; set; }
 
+
+        [Inject]
+        public ITodoListMemberService TodoListMemberService { get; set; }
 
         public async Task OnSave()
         {
@@ -27,6 +35,20 @@ namespace Todo.Pages.TodoList
         public async Task Delete()
         {
             await OnDelete.InvokeAsync(TodoList);
+        }
+
+
+        public async Task AddNewMember(TodoListMember member)
+        {
+            TodoList.Members.Add(member); 
+            await TodoListMemberService.AddMemberToTodoList(new NewTodoListMemberDto
+                {ListId = TodoList.Id, UserId = member.Id});
+        }
+
+        public async Task MemberDelete(TodoListMember member)
+        {
+            TodoList.Members.Remove(member);
+            await TodoListMemberService.RemoveMemberFromTodoList(TodoList.Id, member.Id);
         }
 
     }

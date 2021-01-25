@@ -30,10 +30,10 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         {
             _authService = authService;
             _todoListService = todoItemService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoItemEntity>();
         }
 
-        [FunctionName(FunctionConstants.AddTodoItemFunction)]
+        [FunctionName(FunctionConstants.TodoItem.Add)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {

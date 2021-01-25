@@ -30,6 +30,7 @@ namespace Todo.Extensions
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<ILoaderItemFactory, LoaderItemFactory>();
             services.AddScoped<ITodoListService, TodoListService>();
+            services.AddScoped<ITodoListMemberService, TodoListMemberService>();
 
 
             return services;

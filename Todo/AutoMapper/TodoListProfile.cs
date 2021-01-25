@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Todo.Models;
 using Todo.Shared.Dto.TodoLists;
+using Todo.Shared.Dto.TodoLists.Members;
 
 namespace Todo.AutoMapper
 {
@@ -10,6 +11,8 @@ namespace Todo.AutoMapper
         public TodoListProfile()
         {
             CreateMap<TodoListDto, TodoList>();
+
+            CreateMap<TodoListMemberDto, TodoListMember>();
         }
 
     }

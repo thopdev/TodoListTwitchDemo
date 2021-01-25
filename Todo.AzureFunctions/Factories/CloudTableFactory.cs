@@ -15,6 +15,12 @@ namespace Todo.AzureFunctions.Factories
         }
 
 
+        public CloudTable CreateCloudTable<T>() where T : TableEntity
+        {
+            return CreateCloudTable(typeof(T).Name);
+        }
+
+
         public CloudTable CreateCloudTable(string tableName)
         {
             var storageAccount =

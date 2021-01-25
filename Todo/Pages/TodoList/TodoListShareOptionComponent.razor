@@ -1,0 +1,19 @@
+﻿
+<ul class="md:w-1/2 ml-4">
+
+    @foreach (var member in Members)
+    {
+        <li class="mb-4 w-min flex justify-between">
+            <span class="mr-8">
+                @member.Id
+            </span>
+            <button @onclick="@(() => Delete(member))" class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded h-auto px-4 hover:bg-green-300">Remove</button>
+        </li>
+    }
+</ul>
+
+
+<div class="md:w-1/2 h-6 flex ml-4 mb-4">
+    <input placeholder="New todo list" id="Text" class="w-full rounded-l h-full shadow font-bold pl-2" @bind="NewMemberId"/>
+    <button @onclick="Add" type="submit" class="hop-cursor rounded-r h-full bg-green-500 px-4 shadow font-medium text-white">Add</button>
+</div>

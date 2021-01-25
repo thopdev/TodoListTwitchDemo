@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -24,11 +26,13 @@ namespace Todo.Shared
         }
 
         private string UserName { get; set; }
+        private string UserId { get; set; }
 
         private async void UpdateUserName()
         {
             var user = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             UserName = user.User.Identity?.Name;
+            UserId = user.User.Claims?.FirstOrDefault(x => x.Type ==  ClaimTypes.Name)?.Value;
         }
 
         private void OnTodoListChange()

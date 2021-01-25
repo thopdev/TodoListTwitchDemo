@@ -23,17 +23,19 @@ namespace Todo.AzureFunctions.Functions.TodoLists
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
         private readonly ITodoListService _todoListService;
+        private readonly ITodoListMemberService _listMemberService;
 
-        public GetTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService, ITodoListService todoListService)
+        public GetTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService, ITodoListService todoListService, ITodoListMemberService listMemberService)
         {
             _mapper = mapper;
             _authService = authService;
             _todoListService = todoListService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
+            _listMemberService = listMemberService;
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoListEntity>();
         }
 
 
-        [FunctionName(FunctionConstants.GetTodoListFunction)]
+        [FunctionName(FunctionConstants.TodoList.Get)]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get")]
             HttpRequest req)
@@ -47,12 +49,9 @@ namespace Todo.AzureFunctions.Functions.TodoLists
                 return new BadRequestErrorMessageResult("Id cannot be empty");
             }
 
-            var query = new TableQuery<TodoListEntity>().Where(
-                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, userId));
+            var todoLists = _todoListService.GetListsForUser(userId).ToList();
 
-            var todoList = _cloudTable.ExecuteQuery(query);
-
-            return new OkObjectResult(_mapper.Map<IEnumerable<TodoListDto>>(todoList));
+            return new OkObjectResult(todoLists);
         }
     }
 }

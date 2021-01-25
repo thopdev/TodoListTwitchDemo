@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Cosmos.Table.Protocol;
@@ -16,16 +17,14 @@ namespace Todo.AzureFunctions.Services
 
         public TodoItemService(ICloudTableFactory cloudTableFactory)
         {
-            _todoItemCloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoItemTable);
+            _todoItemCloudTable = cloudTableFactory.CreateCloudTable<TodoItemEntity>();
         }
 
 
         public IEnumerable<TodoItemEntity> GetAllForListId(string listId)
         {
-            var query = new TableQuery<TodoItemEntity>().Where(
-                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, listId));
-
-            return _todoItemCloudTable.ExecuteQuery(query);
+            var query = _todoItemCloudTable.CreateQuery<TodoItemEntity>().Where(x => x.PartitionKey == listId);
+            return query.ToList();
         }
 
         public void DeleteAllItemsWithListId(string listId)

@@ -35,7 +35,7 @@ namespace Todo.Services
                 Status = todoItem.Status
             };
 
-            var result = await _httpService.PostAsync<string>("api/" + FunctionConstants.AddTodoItemFunction, dto);
+            var result = await _httpService.PostAsync<string>("api/" + FunctionConstants.TodoItem.Add, dto);
             todoItem.Id = result;
         }
 
@@ -43,17 +43,17 @@ namespace Todo.Services
         {
             var dto = _mapper.Map<UpdateTodoItemDto>(todoItem);
             dto.ListId = listId;
-            await _httpService.PutVoidAsync("api/" + FunctionConstants.UpdateTodoItemFunction, dto);
+            await _httpService.PutVoidAsync("api/" + FunctionConstants.TodoItem.Update, dto);
         }
 
         public async Task DeleteItem(string listId, string id)
         {
-            await _httpService.DeleteAsync($"api/{FunctionConstants.DeleteTodoItemFunction}/{listId}/{id}");
+            await _httpService.DeleteAsync($"api/{FunctionConstants.TodoItem.Delete}/{listId}/{id}");
         }
 
         public async Task<IEnumerable<TodoItem>> GetList(string listId)
         {
-            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.GetItemsOfTodoListFunction + listId);
+            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.TodoItem.Get + listId);
             var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
             return models;
         }

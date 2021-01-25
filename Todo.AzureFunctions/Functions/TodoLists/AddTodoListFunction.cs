@@ -27,10 +27,10 @@ namespace Todo.AzureFunctions.Functions.TodoLists
         public AddTodoListFunction(ICloudTableFactory cloudTableFactory, IAuthService authService)
         {
             _authService = authService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoListEntity>();
         }
 
-        [FunctionName(FunctionConstants.AddTodoListFunction)]
+        [FunctionName(FunctionConstants.TodoList.Add)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {

@@ -20,29 +20,32 @@ namespace Todo.AzureFunctions.Functions.TodoLists
     {
         private readonly CloudTable _cloudTable;
         private readonly IMapper _mapper;
+        private readonly ITodoListService _todoListService;
 
         private readonly IAuthService _authService;
 
-        public UpdateTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService)
+        public UpdateTodoListFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService, ITodoListService todoListService)
         {
             _mapper = mapper;
             _authService = authService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
+            _todoListService = todoListService;
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoListEntity>();
         }
 
-        [FunctionName(FunctionConstants.UpdateTodoListFunction)]
+        [FunctionName(FunctionConstants.TodoList.Update)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = null)]
             HttpRequest req)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
 
-            var listId = user.UserId;
-
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<UpdateTodoListDto>(requestBody);
+
+            _todoListService.CanUserAccessList(user, data.ListId);
+
+
             var entity = _mapper.Map<TodoListEntity>(data);
-            entity.PartitionKey = listId;
             entity.ETag = "*";
 
             _cloudTable.Execute(TableOperation.Merge(entity));

@@ -31,6 +31,5 @@ namespace Todo.Pages.TodoList
         {
             TodoListService.Update(todoList);
         }
-
     }
 }

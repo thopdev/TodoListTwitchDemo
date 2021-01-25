@@ -23,13 +23,13 @@ namespace Todo.AzureFunctions.Functions.TodoLists
         {
             _authService = authService;
             _itemService = itemService;
-            _cloudTable = cloudTableFactory.CreateCloudTable(TableStorageConstants.TodoListTable);
+            _cloudTable = cloudTableFactory.CreateCloudTable<TodoListEntity>();
         }
 
-        [FunctionName(FunctionConstants.DeleteTodoListFunction)]
+        [FunctionName(FunctionConstants.TodoList.Delete)]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.DeleteTodoListFunction + "/{id}")]
-            HttpRequest req, string id, ClaimsPrincipal claims)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = FunctionConstants.TodoList.Delete + "/{id}")]
+            HttpRequest req, string id)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
             var listId = user.UserId;

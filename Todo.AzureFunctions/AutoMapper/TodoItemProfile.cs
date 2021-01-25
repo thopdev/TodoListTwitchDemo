@@ -9,10 +9,13 @@ namespace Todo.AzureFunctions.AutoMapper
         public TodoItemProfile()
         {
             CreateMap<UpdateTodoItemDto, TodoItemEntity>()
-                .ForMember(dest => dest.RowKey, opt => opt.MapFrom(src => src.Id));
+                .ForMember(dest => dest.RowKey, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.PartitionKey, opt => opt.MapFrom(src => src.Id));
             
             CreateMap<TodoItemEntity, TodoItemDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RowKey));
+
+
         }
     }
 }

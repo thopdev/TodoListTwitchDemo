@@ -39,7 +39,7 @@ namespace Todo.Services
             {
                 _response =
                     _httpService.GetAsync<IEnumerable<TodoListDto>>(
-                        "api/" + FunctionConstants.GetTodoListFunction);
+                        "api/" + FunctionConstants.TodoList.Get);
             }
 
             return _todoLists ?? (_todoLists = _mapper.Map<IEnumerable<TodoList>>(await _response).ToList());
@@ -49,14 +49,14 @@ namespace Todo.Services
         {
             var list = await GetAllLists();
             list.Insert(0, todoList);
-            var result = await _httpService.PostAsync<string>("api/" + FunctionConstants.AddTodoListFunction, todoList);
+            var result = await _httpService.PostAsync<string>("api/" + FunctionConstants.TodoList.Add, todoList);
             todoList.Id = result;
             OnOnTodoListChange();
         }
 
         public async Task Update(TodoList todoList)
         {
-            await _httpService.PutVoidAsync("api/" + FunctionConstants.UpdateTodoListFunction, todoList);
+            await _httpService.PutVoidAsync("api/" + FunctionConstants.TodoList.Update, todoList);
             OnOnTodoListChange();
         }
 
@@ -64,7 +64,7 @@ namespace Todo.Services
         {
             var list = await GetAllLists();
             list.Remove(todoItem);
-            await _httpService.DeleteAsync("api/" + FunctionConstants.DeleteTodoListFunction + "/" + todoItem.Id);
+            await _httpService.DeleteAsync("api/" + FunctionConstants.TodoList.Delete + "/" + todoItem.Id);
             OnOnTodoListChange();
         }
 

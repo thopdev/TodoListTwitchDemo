@@ -1,15 +1,18 @@
-﻿<div class="w-full h-24 rounded flex flex-wrap content-center shadow justify-items-stretch">
-    @if (Editing)
-    {
-        <input @bind="@TodoList.Name" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300  shadow font-medium">
-    
-        <button class="shadow rounded h-auto justify-self-end px-4" @onclick="OnSave">Save</button>
-    }
-    else
-    {
-        <label class="m-4 w-4/5 h-8 text-lg font-medium">@TodoList.Name</label>
-        <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Edit">Edit</button>
-        <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Delete">Delete</button>
-    
-    }
+﻿<div class="w-full rounded  shadow ">
+    <div class="w-full h-24 flex flex-wrap content-center justify-items-stretch">
+        @if (Editing)
+        {
+            <input @bind="@TodoList.Name" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300  shadow font-medium">
+
+            <button class="shadow rounded h-auto justify-self-end px-4" @onclick="OnSave">Save</button>
+        }
+        else
+        {
+            <label class="m-4 w-4/5 h-8 text-lg font-medium">@TodoList.Name</label>
+            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Edit">Edit</button>
+            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Delete">Delete</button>
+
+        }
+    </div>
+        <TodoListShareOptionComponent Members="@TodoList.Members" OnNewMember="AddNewMember" OnMemberDelete="MemberDelete" />
 </div>

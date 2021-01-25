@@ -4,6 +4,6 @@ namespace Todo.AzureFunctions.Factories.Factories
 {
     public interface ICloudTableFactory
     {
-        CloudTable CreateCloudTable(string tableName);
+        CloudTable CreateCloudTable<T>() where T : TableEntity;
     }
 }

@@ -54,6 +54,7 @@ namespace Todo.AzureFunctions
             builder.Services.AddScoped<ITodoItemService, TodoItemService>();
 
             builder.Services.AddScoped<ITodoListService, TodoListService>();
+            builder.Services.AddScoped<ITodoListMemberService, TodoListMemberService>();
 
         }
     }

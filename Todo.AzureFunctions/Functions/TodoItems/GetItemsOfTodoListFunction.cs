@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -33,9 +34,9 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         }
 
 
-        [FunctionName(FunctionConstants.GetItemsOfTodoListFunction)]
+        [FunctionName(FunctionConstants.TodoItem.Get)]
         public IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = FunctionConstants.GetItemsOfTodoListFunction + "{listId}")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = FunctionConstants.TodoItem.Get + "{listId}")]
             HttpRequest req, string listId)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
@@ -49,7 +50,7 @@ namespace Todo.AzureFunctions.Functions.TodoItems
                 return new BadRequestErrorMessageResult("Id cannot be empty");
             }
 
-            var todoList = _todoItemService.GetAllForListId(listId);
+            var todoList = _todoItemService.GetAllForListId(listId).ToList();
 
             return new OkObjectResult(_mapper.Map<IEnumerable<TodoItemDto>>(todoList));
         }

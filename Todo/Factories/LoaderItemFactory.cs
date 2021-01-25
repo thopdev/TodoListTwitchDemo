@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Todo.Factories.Interfaces;
 using Todo.Models;
 
@@ -11,7 +9,7 @@ namespace Todo.Factories
         public LoaderItem CreateRandomItem()
         {
             var random = new Random();
-            var randomNumber = random.Next(0, 4);
+            var randomNumber = random.Next(0, 5);
 
             return randomNumber switch
             {
@@ -22,6 +20,7 @@ namespace Todo.Factories
                 2 => new LoaderItem("A burger a day keeps the stress away!",
                     "https://assets4.lottiefiles.com/packages/lf20_FXggV8.json"),
                 3 => new LoaderItem("Run away doo doo doo doo doo doo", "https://assets5.lottiefiles.com/temporary_files/aZ3MXG.json", "lisejojo"),
+                4 => new LoaderItem("I love blazor, it's LAMAzing!", "https://assets6.lottiefiles.com/packages/lf20_4ll9qg6q.json", "JPReumerman"),
                 _ => new LoaderItem("Don't mind me. Just grabbing a coffee while is loads!",
                     "https://assets4.lottiefiles.com/packages/lf20_0E84Ic.json")
             };
