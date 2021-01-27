@@ -1,8 +1,8 @@
 ﻿using System;
-using Todo.Factories.Interfaces;
-using Todo.Models;
+using Todo.Blazor.Factories.Interfaces;
+using Todo.Blazor.Models;
 
-namespace Todo.Factories
+namespace Todo.Blazor.Factories
 {
     public class LoaderItemFactory : ILoaderItemFactory
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Providers
+namespace Todo.Blazor.Providers
 {
     public class CustomAuthenticationProvider : AuthenticationStateProvider
     {

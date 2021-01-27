@@ -5,10 +5,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Todo.Models;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Models;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Shared
+namespace Todo.Blazor.Shared
 {
     public partial class NavMenu
     {

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Models;
 
-namespace Todo.Services
+namespace Todo.Blazor.Services
 {
     public class DebugAuthService : IAuthService
     {

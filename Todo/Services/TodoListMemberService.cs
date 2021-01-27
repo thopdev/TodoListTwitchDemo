@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Todo.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoLists.Members;
 
-namespace Todo.Services
+namespace Todo.Blazor.Services
 {
     public class TodoListMemberService : ITodoListMemberService
     {

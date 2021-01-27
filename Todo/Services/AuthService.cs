@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Todo.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Models;
 
-namespace Todo.Services
+namespace Todo.Blazor.Services
 {
     public class AuthService : IAuthService
     {

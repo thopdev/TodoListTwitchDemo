@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Todo.Models;
+using Todo.Blazor.Models;
 
-namespace Todo.Services.Interfaces
+namespace Todo.Blazor.Services.Interfaces
 {
     public interface ITodoItemService
     {

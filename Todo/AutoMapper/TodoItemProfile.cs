@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Todo.Models;
+using Todo.Blazor.Models;
 using Todo.Shared.Dto.TodoItems;
 
-namespace Todo.AutoMapper
+namespace Todo.Blazor.AutoMapper
 {
     public class TodoItemProfile : Profile
     {

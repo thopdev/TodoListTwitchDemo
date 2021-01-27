@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Todo.Factories.Interfaces;
-using Todo.Models;
+using Todo.Blazor.Factories.Interfaces;
+using Todo.Blazor.Models;
 
-namespace Todo.Pages
+namespace Todo.Blazor.Pages
 {
     public partial class LoaderComponent
     {

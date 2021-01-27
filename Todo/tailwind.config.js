@@ -2,7 +2,11 @@
     purge: [],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            inset: {
+                "1/2": "50%"
+            }
+        },
         rotate: {
             '-180': '-180deg',
             '-90': '-90deg',
@@ -15,7 +19,8 @@
             '270': '270deg',
             '360': '360deg',
             '720': '720deg'
-        }
+        },
+     
     },
     variants: {
         extend: {},

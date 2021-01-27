@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Services
+namespace Todo.Blazor.Services
 {
     public class HttpService : IHttpService
     {

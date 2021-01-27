@@ -1,6 +1,6 @@
 ﻿using Todo.Shared.Enums;
 
-namespace Todo.Models
+namespace Todo.Blazor.Models
 {
     public class TodoItem
     {

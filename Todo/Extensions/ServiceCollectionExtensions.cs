@@ -1,17 +1,15 @@
-using System;
-using System.Net.Http;
 using AutoMapper;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Plk.Blazor.DragDrop;
-using Todo.Factories;
-using Todo.Factories.Interfaces;
-using Todo.Providers;
-using Todo.Services;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Factories;
+using Todo.Blazor.Factories.Interfaces;
+using Todo.Blazor.Providers;
+using Todo.Blazor.Services;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Extensions
+namespace Todo.Blazor.Extensions
 {
     public static class ServiceCollectionExtensions
     {

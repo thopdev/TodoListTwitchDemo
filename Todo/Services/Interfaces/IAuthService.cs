@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Todo.Shared.Models;
 
-namespace Todo.Services.Interfaces
+namespace Todo.Blazor.Services.Interfaces
 {
     public interface IAuthService
     {

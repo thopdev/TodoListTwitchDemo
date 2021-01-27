@@ -1,7 +1,6 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Todo.Services.Interfaces
+namespace Todo.Blazor.Services.Interfaces
 {
     public interface IHttpService
     {

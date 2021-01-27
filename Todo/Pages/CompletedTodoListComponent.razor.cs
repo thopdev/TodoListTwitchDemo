@@ -1,4 +1,4 @@
-namespace Todo.Pages
+namespace Todo.Blazor.Pages
 {
     public partial class CompletedTodoListComponent
     {

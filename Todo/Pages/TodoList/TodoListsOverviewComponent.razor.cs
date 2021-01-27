@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Pages.TodoList
+namespace Todo.Blazor.Pages.TodoList
 {
     public partial class TodoListsOverviewComponent
     {

@@ -1,4 +1,4 @@
-﻿namespace Todo.Models
+﻿namespace Todo.Blazor.Models
 {
     public class LoaderItem
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Todo.Models;
+using Todo.Blazor.Models;
 using Todo.Shared.Enums;
 
-namespace Todo.Pages.TodoListItems
+namespace Todo.Blazor.Pages.TodoListItems
 {
     public partial class TodoItemComponent
     {

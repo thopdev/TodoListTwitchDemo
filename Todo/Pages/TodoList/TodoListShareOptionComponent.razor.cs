@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using Todo.Models;
+using Todo.Blazor.Models;
 
-namespace Todo.Pages.TodoList
+namespace Todo.Blazor.Pages.TodoList
 {
     public partial class TodoListShareOptionComponent
     {

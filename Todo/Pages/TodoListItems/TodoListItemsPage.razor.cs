@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Todo.Pages.TodoListItems
+namespace Todo.Blazor.Pages.TodoListItems
 {
     public partial class TodoListItemsPage
     {

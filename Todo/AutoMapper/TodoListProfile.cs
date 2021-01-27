@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Todo.Models;
+using Todo.Blazor.Models;
 using Todo.Shared.Dto.TodoLists;
 using Todo.Shared.Dto.TodoLists.Members;
 
-namespace Todo.AutoMapper
+namespace Todo.Blazor.AutoMapper
 {
     public class TodoListProfile : Profile
     {

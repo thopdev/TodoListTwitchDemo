@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Blazored.LocalStorage;
-using Todo.Models;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Models;
+using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoItems;
 
-namespace Todo.Services
+namespace Todo.Blazor.Services
 {
     public class TodoItemService : ITodoItemService
     {

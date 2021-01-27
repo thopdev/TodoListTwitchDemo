@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Todo.Models;
-using Todo.Services.Interfaces;
+using Todo.Blazor.Models;
+using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Dto.TodoLists.Members;
 
-namespace Todo.Pages.TodoList
+namespace Todo.Blazor.Pages.TodoList
 {
     public partial class TodoListComponent
     {

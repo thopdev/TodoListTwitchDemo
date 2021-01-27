@@ -1,6 +1,6 @@
-﻿using Todo.Models;
+﻿using Todo.Blazor.Models;
 
-namespace Todo.Factories.Interfaces
+namespace Todo.Blazor.Factories.Interfaces
 {
     public interface ILoaderItemFactory
     {

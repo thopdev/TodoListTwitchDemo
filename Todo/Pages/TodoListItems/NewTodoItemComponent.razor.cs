@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Todo.Models;
-using Todo.Models.Forms;
+using Todo.Blazor.Models;
+using Todo.Blazor.Models.Forms;
 
-namespace Todo.Pages.TodoListItems
+namespace Todo.Blazor.Pages.TodoListItems
 {
     public partial class NewTodoItemComponent
     {
