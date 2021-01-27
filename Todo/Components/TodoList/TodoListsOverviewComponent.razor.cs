@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Blazor.Pages.TodoList
+namespace Todo.Blazor.Components.TodoList
 {
     public partial class TodoListsOverviewComponent
     {

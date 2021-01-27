@@ -3,6 +3,8 @@
         <lottie-player src="@LoaderItem.Url" class="w-full" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
     </div>
     <span class="text-xl w-full text-center">@LoaderItem.Text</span>
-    <span class="text-sm font-bold w-full text-center">@LoaderItem.UserName</span>
-
+    @if (LoaderItem.UserName != null)
+    {
+        <span class="text-sm font-bold w-full text-center">@LoaderItem.UserName</span>
+    }
 </div>

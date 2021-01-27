@@ -2,7 +2,7 @@
 using Todo.Blazor.Factories.Interfaces;
 using Todo.Blazor.Models;
 
-namespace Todo.Blazor.Pages
+namespace Todo.Blazor.Components
 {
     public partial class LoaderComponent
     {

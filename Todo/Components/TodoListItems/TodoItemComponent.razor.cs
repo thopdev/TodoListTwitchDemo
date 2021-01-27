@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Models;
 using Todo.Shared.Enums;
 
-namespace Todo.Blazor.Pages.TodoListItems
+namespace Todo.Blazor.Components.TodoListItems
 {
     public partial class TodoItemComponent
     {

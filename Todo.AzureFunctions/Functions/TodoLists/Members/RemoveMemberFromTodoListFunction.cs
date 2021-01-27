@@ -24,7 +24,6 @@ namespace Todo.AzureFunctions.Functions.TodoLists.Members
             _todoListMemberService = todoListMemberService;
         }
 
-
         [FunctionName(FunctionConstants.TodoList.Members.Remove)]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete",
@@ -39,14 +38,12 @@ namespace Todo.AzureFunctions.Functions.TodoLists.Members
                 return new UnauthorizedResult();
             }
 
-            if (!await _todoListMemberService.RemoveAsync(listId, userId))
+            if (!await _todoListMemberService.DeleteAsync(listId, userId))
             {
                 return new NotFoundResult();
             }
 
             return new NoContentResult();
-
-
         }
     }
 }

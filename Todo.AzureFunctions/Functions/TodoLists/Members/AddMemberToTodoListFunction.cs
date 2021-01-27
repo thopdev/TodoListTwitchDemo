@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -18,7 +17,6 @@ namespace Todo.AzureFunctions.Functions.TodoLists.Members
         private readonly IAuthService _authService;
         private readonly ITodoListMemberService _listMemberService;
         private readonly ITodoListService _todoListService;
-
 
         public AddMemberToTodoListFunction(IAuthService authService, ITodoListMemberService listMemberService, ITodoListService todoListService)
         {
@@ -48,7 +46,7 @@ namespace Todo.AzureFunctions.Functions.TodoLists.Members
                 RowKey = data.UserId
             };
 
-            _listMemberService.Add(entity);
+            _listMemberService.Insert(entity);
 
             return new OkResult();
         }

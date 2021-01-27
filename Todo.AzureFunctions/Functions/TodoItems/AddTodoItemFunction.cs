@@ -2,35 +2,33 @@ using System;
 using System.Data;
 using System.IO;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
-using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories;
-using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoItems;
-using CloudTable = Microsoft.Azure.Cosmos.Table.CloudTable;
-using TableOperation = Microsoft.Azure.Cosmos.Table.TableOperation;
 
 namespace Todo.AzureFunctions.Functions.TodoItems
 {
     public class AddTodoItemFunction
     {
-        private readonly CloudTable _cloudTable;
         private readonly IAuthService _authService;
 
         private readonly ITodoListService _todoListService;
+        private readonly ITodoItemService _todoItemService;
+        private readonly IMapper _mapper;
 
-        public AddTodoItemFunction(ICloudTableFactory cloudTableFactory, IAuthService authService, ITodoListService todoItemService)
+        public AddTodoItemFunction(IAuthService authService, ITodoListService todoItemService, ITodoItemService todoItemService1, IMapper mapper)
         {
             _authService = authService;
             _todoListService = todoItemService;
-            _cloudTable = cloudTableFactory.CreateCloudTable<TodoItemEntity>();
+            _todoItemService = todoItemService1;
+            _mapper = mapper;
         }
 
         [FunctionName(FunctionConstants.TodoItem.Add)]
@@ -55,13 +53,13 @@ namespace Todo.AzureFunctions.Functions.TodoItems
                 return new UnauthorizedResult();
             }
 
-            _cloudTable.Execute(TableOperation.Insert(new TodoItemEntity
+            _todoItemService.Insert(new TodoItemEntity
                 {
                     PartitionKey = listId, RowKey = rowKey, Name = data.Name,
                     Priority = (int) data.Priority, Status = data.Status
-                }));
+                });
 
-                return new OkObjectResult(rowKey);
+            return new OkObjectResult(rowKey);
         } 
     }
 }

@@ -3,9 +3,7 @@ using Todo.AzureFunctions.Entities;
 
 namespace Todo.AzureFunctions.Services.Interfaces
 {
-    public interface ITodoItemService
+    public interface ITodoItemService : ICloudTableServiceBase<TodoItemEntity>
     {
-        IEnumerable<TodoItemEntity> GetAllForListId(string listId);
-        void DeleteAllItemsWithListId(string listId);
     }
 }

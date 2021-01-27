@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Models;
 
-namespace Todo.Blazor.Pages.TodoList
+namespace Todo.Blazor.Components.TodoList
 {
     public partial class TodoListShareOptionComponent
     {

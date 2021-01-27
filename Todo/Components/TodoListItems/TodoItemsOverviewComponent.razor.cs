@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Models;
 using Todo.Blazor.Services.Interfaces;
 
-namespace Todo.Blazor.Pages.TodoListItems
+namespace Todo.Blazor.Components.TodoListItems
 {
-    public partial class TodoListItemsComponent
+    public partial class TodoItemsOverviewComponent
     {
         [Inject]
         public ITodoItemService TodoItemService { get; set; }
@@ -18,12 +18,8 @@ namespace Todo.Blazor.Pages.TodoListItems
 
         public ObservableCollection<TodoItem> TodoItems { get; set; }
 
-
-
-
         [Parameter]
         public string ListId { get; set; }
-
 
         protected override async Task OnParametersSetAsync()
         {

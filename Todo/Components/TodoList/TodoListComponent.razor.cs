@@ -4,7 +4,7 @@ using Todo.Blazor.Models;
 using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Dto.TodoLists.Members;
 
-namespace Todo.Blazor.Pages.TodoList
+namespace Todo.Blazor.Components.TodoList
 {
     public partial class TodoListComponent
     {

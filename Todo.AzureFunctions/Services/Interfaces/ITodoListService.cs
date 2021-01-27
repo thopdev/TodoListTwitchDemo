@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Todo.AzureFunctions.Entities;
 using Todo.Shared.Dto.TodoLists;
 using Todo.Shared.Models;
 
 namespace Todo.AzureFunctions.Services.Interfaces
 {
-    public interface ITodoListService
+    public interface ITodoListService : ICloudTableServiceBase<TodoListEntity>
     {
         bool CanUserAccessList(ClientPrincipal principal, string listId);
 

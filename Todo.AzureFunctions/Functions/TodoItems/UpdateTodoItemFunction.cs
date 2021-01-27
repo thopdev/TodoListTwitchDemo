@@ -7,9 +7,7 @@ using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
-using Todo.AzureFunctions.Constants;
 using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoItems;
@@ -18,17 +16,17 @@ namespace Todo.AzureFunctions.Functions.TodoItems
 {
     public class UpdateTodoItemFunction
     {
-        private readonly CloudTable _cloudTable;
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
         private readonly ITodoListService _todoListService;
+        private readonly ITodoItemService _todoItemService;
 
-        public UpdateTodoItemFunction(ICloudTableFactory cloudTableFactory, IMapper mapper, IAuthService authService, ITodoListService todoListService)
+        public UpdateTodoItemFunction(IMapper mapper, IAuthService authService, ITodoListService todoListService, ITodoItemService todoItemService)
         {
             _mapper = mapper;
             _authService = authService;
             _todoListService = todoListService;
-            _cloudTable = cloudTableFactory.CreateCloudTable<TodoItemEntity>();
+            _todoItemService = todoItemService;
         }
 
         [FunctionName(FunctionConstants.TodoItem.Update)]
@@ -50,12 +48,10 @@ namespace Todo.AzureFunctions.Functions.TodoItems
             }
 
             entity.PartitionKey = listId;
-            entity.ETag = "*";
 
-            _cloudTable.Execute(TableOperation.Merge(entity));
+            _todoItemService.Save(entity);
 
             return new OkResult();
         }
-
     }
 }

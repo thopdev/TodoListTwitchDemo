@@ -6,6 +6,10 @@
         public string Url { get; }
         public string UserName { get; set; }
 
+        public LoaderItem()
+        {
+            
+        }
 
         public LoaderItem(string text, string url)
         {

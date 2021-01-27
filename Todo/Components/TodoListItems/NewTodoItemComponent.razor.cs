@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Models;
 using Todo.Blazor.Models.Forms;
 
-namespace Todo.Blazor.Pages.TodoListItems
+namespace Todo.Blazor.Components.TodoListItems
 {
     public partial class NewTodoItemComponent
     {

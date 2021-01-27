@@ -1,13 +1,8 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Todo.AzureFunctions.Constants;
-using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 
@@ -15,15 +10,15 @@ namespace Todo.AzureFunctions.Functions.TodoLists
 {
     public class DeleteTodoListFunction
     {
-        private readonly CloudTable _cloudTable;
         private readonly IAuthService _authService;
+        private readonly ITodoListService _todoListService;
         private readonly ITodoItemService _itemService;
 
-        public DeleteTodoListFunction(ICloudTableFactory cloudTableFactory, IAuthService authService, ITodoItemService itemService)
+        public DeleteTodoListFunction(IAuthService authService, ITodoItemService itemService, ITodoListService todoListService)
         {
             _authService = authService;
             _itemService = itemService;
-            _cloudTable = cloudTableFactory.CreateCloudTable<TodoListEntity>();
+            _todoListService = todoListService;
         }
 
         [FunctionName(FunctionConstants.TodoList.Delete)]
@@ -39,18 +34,15 @@ namespace Todo.AzureFunctions.Functions.TodoLists
                 return new BadRequestObjectResult("Id or listId cannot be empty");
             }
 
-            var result = await _cloudTable.ExecuteAsync(TableOperation.Retrieve<TodoListEntity>(listId, id));
-            if (result?.Result is TodoListEntity entity)
+
+            if (await _todoListService.DeleteAsync(listId, id))
             {
-                _cloudTable.Execute(TableOperation.Delete(entity));
-                _itemService.DeleteAllItemsWithListId(id);
+                _itemService.DeleteEntitiesWithPartitionKey(id);
+                return new NoContentResult();
+
             }
-            else
-            {
-                return new NotFoundResult();
-            }
-            
-            return new NoContentResult();
+
+            return new NotFoundResult();
         }
     }
 }
