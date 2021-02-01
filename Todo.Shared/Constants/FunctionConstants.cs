@@ -10,6 +10,11 @@
             public const string Delete = "DeleteTodoItem";
         }
 
+        public class User
+        {
+            public const string Get = "GetUsers";
+        }
+
         public class TodoList
         {
             public const string Get = "GetTodoLists";

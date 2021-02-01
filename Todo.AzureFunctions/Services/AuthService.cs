@@ -10,6 +10,13 @@ namespace Todo.AzureFunctions.Services
 {
     public class AuthService : IAuthService
     {
+        private readonly IUserService _userService;
+
+        public AuthService(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public ClientPrincipal GetClientPrincipalFromRequest(HttpRequest req)
         {
             if (req.Headers.TryGetValue("x-ms-client-principal", out var header))
@@ -17,9 +24,11 @@ namespace Todo.AzureFunctions.Services
                 var data = header.First();
                 var decoded = Convert.FromBase64String(data);
                 var json = Encoding.ASCII.GetString(decoded);
-                return JsonConvert.DeserializeObject<ClientPrincipal>(json);
+                var clientPrincipal = JsonConvert.DeserializeObject<ClientPrincipal>(json);
+                _userService.InsertIfNotExists(clientPrincipal);
+                return clientPrincipal;
             }
-
+            
             return new ClientPrincipal();
         }
 

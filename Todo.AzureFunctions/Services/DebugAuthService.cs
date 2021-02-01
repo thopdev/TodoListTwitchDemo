@@ -6,12 +6,23 @@ namespace Todo.AzureFunctions.Services
 {
     public class DebugAuthService : IAuthService
     {
+        private readonly IUserService _userService;
+
+        public DebugAuthService(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public ClientPrincipal GetClientPrincipalFromRequest(HttpRequest req)
         {
-            return new ClientPrincipal
+            var principle =  new ClientPrincipal
             {
-                UserId = "ThopDev"
+                IdentityProvider = "ThopDevsSuperSecretAuth",
+                UserId = "ThopDev",
+                UserDetails = "ThopDev"
             };
+            _userService.InsertIfNotExists(principle);
+            return principle;
         }
     }
 }

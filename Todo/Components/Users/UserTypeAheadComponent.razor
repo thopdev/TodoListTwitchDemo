@@ -1,0 +1,9 @@
+﻿<BlazoredTypeahead SearchMethod="SearchUsers"
+                   @bind-Value="NewUser">
+    <SelectedTemplate>
+        @context.UserDetails
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context.UserDetails (@context.IdentityProvider - @context.UserId)
+    </ResultTemplate>
+</BlazoredTypeahead>

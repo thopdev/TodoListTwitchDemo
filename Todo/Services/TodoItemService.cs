@@ -50,7 +50,7 @@ namespace Todo.Blazor.Services
 
         public async Task<IEnumerable<TodoItem>> GetList(string listId)
         {
-            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.TodoItem.Get + listId);
+            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.TodoItem.Get + "/" + listId);
             var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
             return models;
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
+using Todo.Blazor.Components.Users;
 using Todo.Blazor.Models;
 
 namespace Todo.Blazor.Components.TodoList
@@ -16,13 +17,14 @@ namespace Todo.Blazor.Components.TodoList
         [Parameter]
         public EventCallback<TodoListMember> OnMemberDelete { get; set; }
 
+        public UserTypeAheadComponent UserTypeAhead { get; set; }
 
         private string NewMemberId { get; set; }
 
 
         public void Add()
         {
-            OnNewMember.InvokeAsync(new TodoListMember {Id = NewMemberId});
+            OnNewMember.InvokeAsync(new TodoListMember {Id = UserTypeAhead.NewUser.UserId});
             NewMemberId = string.Empty;
         }
 

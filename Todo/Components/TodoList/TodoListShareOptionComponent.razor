@@ -13,7 +13,7 @@
 </ul>
 
 
-<div class="md:w-1/2 h-6 flex ml-4 mb-4">
-    <input placeholder="New todo list" id="Text" class="w-full rounded-l h-full shadow font-bold pl-2" @bind="NewMemberId"/>
-    <button @onclick="Add" type="submit" class="hop-cursor rounded-r h-full bg-green-500 px-4 shadow font-medium text-white">Add</button>
+<div class="md:w-1/2 h-auto flex ml-4 mb-4">
+    <UserTypeAheadComponent @ref="UserTypeAhead" />
+    <button @onclick="Add" type="submit" class="hop-cursor rounded-r h-auto bg-green-500 px-4 shadow font-medium text-white">Add</button>
 </div>

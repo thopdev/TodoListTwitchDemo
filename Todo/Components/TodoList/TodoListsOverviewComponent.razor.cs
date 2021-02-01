@@ -5,7 +5,7 @@ using Todo.Blazor.Services.Interfaces;
 
 namespace Todo.Blazor.Components.TodoList
 {
-    public partial class TodoListsOverviewComponent
+    public partial class TodoListsOverviewComponent 
     {
         [Inject] public ITodoListService TodoListService { get; set; }
 

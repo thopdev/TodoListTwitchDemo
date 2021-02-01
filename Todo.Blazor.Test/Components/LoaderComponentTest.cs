@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using AutoFixture.Xunit2;
 using Bunit;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Todo.Blazor.Components;
 using Todo.Blazor.Factories.Interfaces;
@@ -10,17 +10,15 @@ using Xunit;
 
 namespace Todo.Blazor.Test.Components
 {
-    public class LoaderComponentTest : TestContext
+    public class LoaderComponentTest
     {
         [Theory]
         [InlineDomainData]
-        public void LoaderContainsLottiePlayer(string name, string uri, Mock<ILoaderItemFactory> loaderItemFactory)
+        public void LoaderContainsLottiePlayer(string name, string uri, [Frozen] TestContext testContext, Mock<ILoaderItemFactory> loaderItemFactory)
         {
-            Services.AddSingleton(loaderItemFactory.Object);
-
             loaderItemFactory.Setup(x => x.CreateRandomItem()).Returns(new LoaderItem(name, uri));
 
-            var loaderComponent = RenderComponent<LoaderComponent>();
+            var loaderComponent = testContext.RenderComponent<LoaderComponent>();
 
             var lottiePlayer = loaderComponent.Find("lottie-player");
             Assert.Equal(uri, lottiePlayer.Attributes.FirstOrDefault(a => a.Name == "src").Value);
@@ -28,13 +26,11 @@ namespace Todo.Blazor.Test.Components
 
         [Theory]
         [InlineDomainData]
-        public void LoaderWithoutUsername(string name, string uri, Mock<ILoaderItemFactory> loaderItemFactory)
+        public void LoaderWithoutUsername(string name, string uri, Mock<ILoaderItemFactory> loaderItemFactory, TestContext context)
         {
-            Services.AddSingleton(loaderItemFactory.Object);
-
             loaderItemFactory.Setup(x => x.CreateRandomItem()).Returns(new LoaderItem(name, uri));
 
-            var loaderComponent = RenderComponent<LoaderComponent>();
+            var loaderComponent = context.RenderComponent<LoaderComponent>();
 
             var spans = loaderComponent.FindAll("span");
 
@@ -44,13 +40,11 @@ namespace Todo.Blazor.Test.Components
 
         [Theory]
         [InlineDomainData]
-        public void LoaderWithUsername(string name, string uri, string userName, Mock<ILoaderItemFactory> loaderItemFactory)
+        public void LoaderWithUsername(string name, string uri, string userName, Mock<ILoaderItemFactory> loaderItemFactory, TestContext context)
         {
-            Services.AddSingleton(loaderItemFactory.Object);
-
             loaderItemFactory.Setup(x => x.CreateRandomItem()).Returns(new LoaderItem(name, uri, userName));
 
-            var loaderComponent = RenderComponent<LoaderComponent>();
+            var loaderComponent = context.RenderComponent<LoaderComponent>();
 
             var spans = loaderComponent.FindAll("span");
 
@@ -58,6 +52,5 @@ namespace Todo.Blazor.Test.Components
             Assert.Equal(name, spans[0].TextContent);
             Assert.Equal(userName, spans[1].TextContent);
         }
-
     }
 }

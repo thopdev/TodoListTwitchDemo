@@ -29,6 +29,7 @@ namespace Todo.Blazor.Extensions
             services.AddScoped<ILoaderItemFactory, LoaderItemFactory>();
             services.AddScoped<ITodoListService, TodoListService>();
             services.AddScoped<ITodoListMemberService, TodoListMemberService>();
+            services.AddScoped<IUserService, UserService>();
 
 
             return services;

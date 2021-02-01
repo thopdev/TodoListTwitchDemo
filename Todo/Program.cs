@@ -1,17 +1,13 @@
 using System;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Todo.Extensions;
-using Todo.Services;
-using Todo.Services.Interfaces;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Todo.Blazor.Extensions;
+using Todo.Blazor.Services;
+using Todo.Blazor.Services.Interfaces;
 
-namespace Todo
+namespace Todo.Blazor
 {
     public class Program
     {
@@ -23,8 +19,8 @@ namespace Todo
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress ) });
             builder.Services.AddScoped<IAuthService, AuthService>();
 // #else
-//             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7071") });
-//             builder.Services.AddScoped<IAuthService, DebugAuthService>();
+             // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7071") });
+             // builder.Services.AddScoped<IAuthService, DebugAuthService>();
 //
 // #endif
             builder.Services.AddServices();

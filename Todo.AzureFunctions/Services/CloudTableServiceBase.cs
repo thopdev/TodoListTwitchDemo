@@ -17,6 +17,11 @@ namespace Todo.AzureFunctions.Services
             CloudTable = cloudTableFactory.CreateCloudTable<T>();
         }
 
+        public IEnumerable<T> Get(int skip, int take)
+        {
+            return CloudTable.CreateQuery<T>().ToList().Take(10);
+        }
+
         public T GetEntityByPartitionAndRowKey(string partitionKey, string rowKey)
         {
             return CloudTable.CreateQuery<T>()
@@ -30,7 +35,7 @@ namespace Todo.AzureFunctions.Services
 
         public IEnumerable<T> GetEntitiesForRowKey(string rowKey)
         {
-            return CloudTable.CreateQuery<T>().Where(x => x.PartitionKey == rowKey).ToList();
+            return CloudTable.CreateQuery<T>().Where(x => x.RowKey == rowKey).ToList();
         }
 
         public void DeleteEntitiesWithPartitionKey(string partitionKey)
@@ -45,6 +50,18 @@ namespace Todo.AzureFunctions.Services
         public void Insert(T entity)
         {
             CloudTable.Execute(TableOperation.Insert(entity));
+        }
+
+        public void InsertIfNotExists(T entity)
+        {
+            try
+            {
+                CloudTable.Execute(TableOperation.Insert(entity));
+            }
+            catch (StorageException exception)  when (exception.Message == "Conflict")
+            {
+
+            }
         }
 
         public async Task<bool> DeleteAsync(string partitionKey, string rowKey)
