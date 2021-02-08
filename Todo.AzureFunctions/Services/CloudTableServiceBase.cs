@@ -64,6 +64,20 @@ namespace Todo.AzureFunctions.Services
             }
         }
 
+        public bool DeleteByRowKey(string rowKey)
+        {
+            var result = GetEntitiesForRowKey(rowKey).First();
+            
+            if (result is ITableEntity entity)
+            {
+                CloudTable.Execute(TableOperation.Delete(entity));
+                return true;
+            }
+
+            return false;
+
+        }
+
         public async Task<bool> DeleteAsync(string partitionKey, string rowKey)
         {
 

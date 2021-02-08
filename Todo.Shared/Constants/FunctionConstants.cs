@@ -26,6 +26,7 @@
             {
                 public const string Add = "AddMemberToTodoList";
                 public const string Remove = "RemoveMemberFromTodoList";
+                public const string Update = "UpdateMember";
             }
         }
 

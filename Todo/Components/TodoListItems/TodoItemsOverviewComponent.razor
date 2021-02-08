@@ -1,10 +1,13 @@
-﻿@if (TodoItems != null)
+﻿@using Todo.Shared.Enums
+@if (TodoList != null)
 {
     <div class="flex w-full flex-wrap gap-2">
-        <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
-        @foreach (var item in TodoItems)
+        @if (TodoList.ShareRole > ShareRole.Edit){ 
+            <NewTodoItemComponent OnNewTodoItem="AddTodoItemToList"></NewTodoItemComponent>
+        }
+        @foreach (var item in TodoList.Items)
         {
-            <TodoItemComponent TodoItem="@item" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
+            <TodoItemComponent TodoItem="@item" CanEdit="@(TodoList.ShareRole > ShareRole.Edit)" OnChange="Update" OnDelete="RemoveFromTodoList"></TodoItemComponent>
         }
 
     </div>

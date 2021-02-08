@@ -5,6 +5,7 @@ using Todo.Blazor.Models;
 using Todo.Blazor.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoItems;
+using Todo.Shared.Dto.TodoLists;
 
 namespace Todo.Blazor.Services
 {
@@ -48,10 +49,10 @@ namespace Todo.Blazor.Services
             await _httpService.DeleteAsync($"api/{FunctionConstants.TodoItem.Delete}/{listId}/{id}");
         }
 
-        public async Task<IEnumerable<TodoItem>> GetList(string listId)
+        public async Task<TodoListWithItems> GetList(string listId)
         {
-            var dtos = await _httpService.GetAsync<List<TodoItemDto>>("api/" + FunctionConstants.TodoItem.Get + "/" + listId);
-            var models = _mapper.Map<IEnumerable<TodoItem>>(dtos);
+            var dtos = await _httpService.GetAsync<TodoListWithItemsDto>("api/" + FunctionConstants.TodoItem.Get + "/" + listId);
+            var models = _mapper.Map<TodoListWithItems>(dtos);
             return models;
         }
     }

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Blazored.LocalStorage;
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Plk.Blazor.DragDrop;
@@ -30,6 +31,8 @@ namespace Todo.Blazor.Extensions
             services.AddScoped<ITodoListService, TodoListService>();
             services.AddScoped<ITodoListMemberService, TodoListMemberService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddBlazoredToast();
 
 
             return services;

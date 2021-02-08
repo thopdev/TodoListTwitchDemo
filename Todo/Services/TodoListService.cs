@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -63,7 +64,16 @@ namespace Todo.Blazor.Services
         {
             var list = await GetAllLists();
             list.Remove(todoItem);
-            await _httpService.DeleteAsync("api/" + FunctionConstants.TodoList.Delete + "/" + todoItem.Id);
+            try
+            {
+                await _httpService.DeleteAsync("api/" + FunctionConstants.TodoList.Delete + "/" + todoItem.Id);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Console.WriteLine("weird right?");
+                list.Add(todoItem);
+            }
+
             OnOnTodoListChange();
         }
 

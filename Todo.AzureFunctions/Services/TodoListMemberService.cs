@@ -2,6 +2,7 @@
 using Todo.AzureFunctions.Extensions;
 using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
+using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Services
 {
@@ -11,9 +12,22 @@ namespace Todo.AzureFunctions.Services
         {
         }
 
-        public bool CanUserAccessList(string listId, string userId)
+        public bool CanUserAccessList(string listId, string userId, ShareRole requiredRole)
         {
-            return CloudTable.GetTableByPartitionAndRowKey<TodoListMemberEntity>(listId, userId) != null;
+            var result = CloudTable.GetTableByPartitionAndRowKey<TodoListMemberEntity>(listId, userId);
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return result.Role >= requiredRole;
+        }
+
+        public ShareRole? GetUserShareRole(string userId, string listId)
+        {
+            var result = CloudTable.GetTableByPartitionAndRowKey<TodoListMemberEntity>(listId, userId);
+            return result?.Role;
         }
     }
 }

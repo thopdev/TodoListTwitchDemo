@@ -1,12 +1,19 @@
-﻿
+﻿@using Todo.Shared.Enums
+
 <ul class="md:w-1/2 ml-4">
 
     @foreach (var member in Members)
     {
         <li class="mb-4 w-min flex justify-between">
             <span class="mr-8">
-                @member.Id
+                @member.Member.UserDetails <small>(@member.Member.UserId)</small>
             </span>
+            <select value="@member.Role" @onchange="((e)=> ChangeShare(e, member))" class="rounded mx-4 shadow">
+                @foreach (var share in Enum.GetValues(typeof(ShareRole)))
+                {
+                    <option value="@share.ToString()">@share</option>
+                }
+            </select>
             <button @onclick="@(() => Delete(member))" class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded h-auto px-4 hover:bg-green-300">Remove</button>
         </li>
     }

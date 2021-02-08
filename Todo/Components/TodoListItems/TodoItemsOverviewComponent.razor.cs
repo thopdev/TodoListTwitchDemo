@@ -16,7 +16,7 @@ namespace Todo.Blazor.Components.TodoListItems
 
         [Parameter] public bool DisplayChecked { get; set; }
 
-        public ObservableCollection<TodoItem> TodoItems { get; set; }
+        public TodoListWithItems TodoList { get; set; }
 
         [Parameter]
         public string ListId { get; set; }
@@ -32,19 +32,19 @@ namespace Todo.Blazor.Components.TodoListItems
                 ListId = todoList.Id;
             }
 
-            TodoItems = new ObservableCollection<TodoItem>(await TodoItemService.GetList(ListId));
+            TodoList = await TodoItemService.GetList(ListId);
         }
 
 
         public void AddTodoItemToList(TodoItem todoItem)
         {
             TodoItemService.AddTodoItemAsync(ListId, todoItem);
-            TodoItems.Insert(0, todoItem);
+            TodoList.Items.Insert(0, todoItem);
         }
 
         public async Task RemoveFromTodoList(TodoItem item)
         {
-            TodoItems.Remove(item);
+            TodoList.Items.Remove(item);
             await TodoItemService.DeleteItem(ListId, item.Id);
         }
 

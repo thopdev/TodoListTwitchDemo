@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Todo.Shared.Dto.TodoLists
+﻿namespace Todo.Shared.Dto.TodoLists
 {
     public class NewTodoListDto
     {

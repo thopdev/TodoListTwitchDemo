@@ -4,19 +4,14 @@ namespace Todo.Blazor.Models
 {
     public class TodoList
     {
-        private List<TodoListMember> _members;
+        private List<TodoListShare> _members;
         public string Id { get; set; }
         public string Name { get; set; }
 
-        public List<TodoListMember> Members
+        public List<TodoListShare> Members
         {
-            get => _members ??= new List<TodoListMember>();
+            get => _members ??= new List<TodoListShare>();
             set => _members = value;
         }
-    }
-
-    public class TodoListMember
-    {
-        public string Id { get; set; }
     }
 }

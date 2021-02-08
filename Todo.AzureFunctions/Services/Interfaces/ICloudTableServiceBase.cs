@@ -14,6 +14,7 @@ namespace Todo.AzureFunctions.Services.Interfaces
         void Insert(T entity);
         void InsertIfNotExists(T entity);
         Task<bool> DeleteAsync(string partitionKey, string rowKey);
+        bool DeleteByRowKey(string rowKey);
         TableResult Save(T entity);
     }
 }

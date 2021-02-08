@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Todo.Blazor.Models;
 using Todo.Shared.Dto.TodoItems;
+using Todo.Shared.Dto.TodoLists;
 
 namespace Todo.Blazor.AutoMapper
 {
@@ -10,6 +11,7 @@ namespace Todo.Blazor.AutoMapper
         {
             CreateMap<TodoItemDto, TodoItem>();
             CreateMap<TodoItem, UpdateTodoItemDto>();
+            CreateMap<TodoListWithItemsDto, TodoListWithItems>();
         }
     }
 }

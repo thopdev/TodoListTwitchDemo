@@ -1,13 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Todo.AzureFunctions.Entities;
-using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 
@@ -31,7 +27,6 @@ namespace Todo.AzureFunctions.Functions.TodoLists
             HttpRequest req)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-
             var userId = user.UserId;
 
             if (string.IsNullOrEmpty(userId))

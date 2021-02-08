@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Todo.Shared.Dto.TodoLists.Members;
+using Todo.Blazor.Models;
 
 namespace Todo.Blazor.Services.Interfaces
 {
     public interface ITodoListMemberService
     {
-        Task AddMemberToTodoList(NewTodoListMemberDto member);
+        Task AddMemberToTodoList(string listId, User member);
         Task RemoveMemberFromTodoList(string listId, string userId);
+        Task UpdateMemberShare(string listId, TodoListShare share);
     }
 }

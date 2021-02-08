@@ -9,6 +9,7 @@ using Todo.AzureFunctions.Entities;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoLists.Members;
+using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Functions.TodoLists.Members
 {
@@ -35,7 +36,7 @@ namespace Todo.AzureFunctions.Functions.TodoLists.Members
             var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var data = JsonConvert.DeserializeObject<NewTodoListMemberDto>(requestBody);
 
-            if (!_todoListService.CanUserAccessList(user, data.ListId))
+            if (!_todoListService.CanUserAccessList(user, data.ListId, ShareRole.Full))
             {
                 return new UnauthorizedResult();
             }

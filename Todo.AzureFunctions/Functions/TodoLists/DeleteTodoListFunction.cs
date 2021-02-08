@@ -5,6 +5,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
+using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Functions.TodoLists
 {
@@ -27,7 +28,11 @@ namespace Todo.AzureFunctions.Functions.TodoLists
             HttpRequest req, string id)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-            var listId = user.UserId;
+
+            if (!_todoListService.CanUserAccessList(user, id, ShareRole.Full))
+            {
+                return new UnauthorizedResult();
+            }
 
             if (string.IsNullOrEmpty(id))
             {
@@ -35,11 +40,10 @@ namespace Todo.AzureFunctions.Functions.TodoLists
             }
 
 
-            if (await _todoListService.DeleteAsync(listId, id))
+            if (_todoListService.DeleteByRowKey(id))
             {
                 _itemService.DeleteEntitiesWithPartitionKey(id);
                 return new NoContentResult();
-
             }
 
             return new NotFoundResult();

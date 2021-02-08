@@ -8,6 +8,7 @@ using Todo.AzureFunctions.Entities;
 using Todo.AzureFunctions.Factories.Factories;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
+using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Functions.TodoItems
 {
@@ -34,7 +35,7 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
 
-            if (!_todoListService.CanUserAccessList(user, listId))
+            if (!_todoListService.CanUserAccessList(user, listId, ShareRole.Edit))
             {
                 return new UnauthorizedResult();
             }

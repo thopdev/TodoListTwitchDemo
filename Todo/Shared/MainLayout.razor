@@ -2,34 +2,34 @@
 <div class="page">
     <CascadingAuthenticationState>
 
-            <NavMenu />
+        <NavMenu />
 
-    <div class="main">
-        <div class="content px-4">
+        <div class="main">
+            <div class="content px-4">
 
-            <AuthorizeView>
-                <Authorized>
-                    @Body
-                </Authorized>
+                <AuthorizeView>
+                    <Authorized>
+                        @Body
+                    </Authorized>
 
-                <NotAuthorized>
-                    <div class="flex flex-wrap justify-evenly mt-12">
-                        <h1 class="text-5xl w-full text-center font-bold">Welcome</h1>
-                        <label class="text-xl w-full text-center font-semibold">You are currently not logged in!</label>
-                        <label class="text-xl w-full text-center font-semibold">Please use one of the login methods below</label>
-                        @foreach (var provider in LoginProviders)
-                        {
-                            <a href="/.auth/login/@provider.Name" class="h-auto mt-16 w-full sm:w-auto flex justify-center">
-                                <img class="h-24"  src="/images/@provider.LogoName" alt="Logo of @provider.Name"/>
+                    <NotAuthorized>
+                        <div class="flex flex-wrap justify-evenly mt-12">
+                            <h1 class="text-5xl w-full text-center font-bold">Welcome</h1>
+                            <label class="text-xl w-full text-center font-semibold">You are currently not logged in!</label>
+                            <label class="text-xl w-full text-center font-semibold">Please use one of the login methods below</label>
+                            @foreach (var provider in LoginProviders)
+                            {
+                                <a href="/.auth/login/@provider.Name" class="h-auto mt-16 w-full sm:w-auto flex justify-center">
+                                    <img class="h-24" src="/images/@provider.LogoName" alt="Logo of @provider.Name" />
 
-                            </a>
-                        }
+                                </a>
+                            }
 
-                    </div>
-                </NotAuthorized>
-            </AuthorizeView>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
         </div>
-    </div>
     </CascadingAuthenticationState>
-
+    <BlazoredToasts />
 </div>

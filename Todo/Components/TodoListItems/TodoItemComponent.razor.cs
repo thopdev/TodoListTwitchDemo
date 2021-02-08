@@ -9,6 +9,7 @@ namespace Todo.Blazor.Components.TodoListItems
     public partial class TodoItemComponent
     {
         [Parameter] public TodoItem TodoItem { get; set; }
+        [Parameter] public bool CanEdit { get; set; }
         [Parameter] public EventCallback<TodoItem> OnDelete { get; set; }
 
         [Parameter]

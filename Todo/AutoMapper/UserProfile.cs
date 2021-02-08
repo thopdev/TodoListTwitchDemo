@@ -8,7 +8,7 @@ namespace Todo.Blazor.AutoMapper
     {
         public UserProfile()
         {
-            CreateMap<UserDto, User>();
+            CreateMap<UserDto, User>().ReverseMap();
         }
     }
 }

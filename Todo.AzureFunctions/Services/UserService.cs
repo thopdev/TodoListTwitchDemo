@@ -27,5 +27,11 @@ namespace Todo.AzureFunctions.Services
         {
             return CloudTable.CreateQuery<UserEntity>().ToList().Where(u => u.UserDetails.ToLower().Contains(searchText)).Take(10).ToList();
         }
+
+        public UserEntity GetByUserId(string userId)
+        {
+            return CloudTable.CreateQuery<UserEntity>().Where(x => x.RowKey == userId).ToList().FirstOrDefault();
+        }
+
     }
 }

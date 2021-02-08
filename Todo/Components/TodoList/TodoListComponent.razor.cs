@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Models;
 using Todo.Blazor.Services.Interfaces;
-using Todo.Shared.Dto.TodoLists.Members;
 
 namespace Todo.Blazor.Components.TodoList
 {
@@ -36,18 +37,21 @@ namespace Todo.Blazor.Components.TodoList
         }
 
 
-        public async Task AddNewMember(TodoListMember member)
+        public async Task AddNewMember(User member)
         {
-            TodoList.Members.Add(member); 
-            await TodoListMemberService.AddMemberToTodoList(new NewTodoListMemberDto
-                {ListId = TodoList.Id, UserId = member.Id});
+            TodoList.Members.Add(new TodoListShare{Role = 0, Member = member}); 
+            await TodoListMemberService.AddMemberToTodoList(TodoList.Id, member);
         }
 
-        public async Task MemberDelete(TodoListMember member)
+        public async Task MemberDelete(TodoListShare share)
         {
-            TodoList.Members.Remove(member);
-            await TodoListMemberService.RemoveMemberFromTodoList(TodoList.Id, member.Id);
+            TodoList.Members.Remove(share);
+            await TodoListMemberService.RemoveMemberFromTodoList(TodoList.Id, share.Member.UserId);
         }
 
+        public async Task ShareChange(TodoListShare share)
+        {
+            await TodoListMemberService.UpdateMemberShare(TodoList.Id, share);
+        }
     }
 }

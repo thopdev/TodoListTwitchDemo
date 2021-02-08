@@ -9,6 +9,8 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Todo.AzureFunctions.Services.Interfaces;
 using Todo.Shared.Constants;
 using Todo.Shared.Dto.TodoItems;
+using Todo.Shared.Dto.TodoLists;
+using Todo.Shared.Enums;
 
 namespace Todo.AzureFunctions.Functions.TodoItems
 {
@@ -18,15 +20,16 @@ namespace Todo.AzureFunctions.Functions.TodoItems
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
         private readonly ITodoItemService _todoItemService;
+        private readonly ITodoListMemberService _todoListMemberService;
 
-        public GetItemsOfTodoListFunction(IMapper mapper, IAuthService authService, ITodoItemService todoItemService, ITodoListService todoListService)
+        public GetItemsOfTodoListFunction(IMapper mapper, IAuthService authService, ITodoItemService todoItemService, ITodoListService todoListService, ITodoListMemberService todoListMemberService)
         {
             _mapper = mapper;
             _authService = authService;
             _todoItemService = todoItemService;
             _todoListService = todoListService;
+            _todoListMemberService = todoListMemberService;
         }
-
 
         [FunctionName(FunctionConstants.TodoItem.Get)]
         public IActionResult Run(
@@ -34,7 +37,7 @@ namespace Todo.AzureFunctions.Functions.TodoItems
             HttpRequest req, string listId)
         {
             var user = _authService.GetClientPrincipalFromRequest(req);
-            if (!_todoListService.CanUserAccessList(user, listId))
+            if (!_todoListService.CanUserAccessList(user, listId, ShareRole.View))
             {
                 return new UnauthorizedResult();
             }
@@ -46,7 +49,11 @@ namespace Todo.AzureFunctions.Functions.TodoItems
 
             var todoList = _todoItemService.GetEntitiesForPartitionKey(listId).ToList();
 
-            return new OkObjectResult(_mapper.Map<IEnumerable<TodoItemDto>>(todoList));
+            return new OkObjectResult(new TodoListWithItemsDto{
+                Items = _mapper.Map<List<TodoItemDto>>(todoList),
+                Id = listId,
+                ShareRole = _todoListMemberService.GetUserShareRole(user.UserId, listId) ?? ShareRole.Full
+            });
         }
     }
 }

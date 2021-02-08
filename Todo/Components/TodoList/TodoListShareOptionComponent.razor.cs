@@ -1,37 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Todo.Blazor.Components.Users;
 using Todo.Blazor.Models;
+using Todo.Shared.Enums;
 
 namespace Todo.Blazor.Components.TodoList
 {
     public partial class TodoListShareOptionComponent
     {
         [Parameter]
-        public List<TodoListMember> Members { get; set; }
+        public List<TodoListShare> Members { get; set; }
 
         [Parameter]
-        public EventCallback<TodoListMember> OnNewMember { get; set; }
-
+        public EventCallback<User> OnNewMember { get; set; }
 
         [Parameter]
-        public EventCallback<TodoListMember> OnMemberDelete { get; set; }
+        public EventCallback<TodoListShare> OnMemberDelete { get; set; }
+
+        [Parameter]
+        public EventCallback<TodoListShare> OnShareChange { get; set; }
 
         public UserTypeAheadComponent UserTypeAhead { get; set; }
 
-        private string NewMemberId { get; set; }
-
-
+        public void ChangeShare(ChangeEventArgs args, TodoListShare share)
+        {
+            if (args.Value is string stringValue)
+            {
+                share.Role = Enum.Parse<ShareRole>(stringValue);
+                OnShareChange.InvokeAsync(share);
+            }
+        }
+        
         public void Add()
         {
-            OnNewMember.InvokeAsync(new TodoListMember {Id = UserTypeAhead.NewUser.UserId});
-            NewMemberId = string.Empty;
+            OnNewMember.InvokeAsync(UserTypeAhead.NewUser);
         }
 
-        public void Delete(TodoListMember member)
+        public void Delete(TodoListShare member)
         {
             OnMemberDelete.InvokeAsync(member);
         }
-
     }
 }
