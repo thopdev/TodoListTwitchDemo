@@ -1,12 +1,12 @@
 ﻿@using Todo.Shared.Enums
-<div class="w-full h-24 rounded flex flex-wrap content-center shadow justify-items-stretch  @GetPriorityColor()">
+<div class="w-full rounded flex flex-wrap content-center shadow justify-items-stretch  @GetPriorityColor()">
     @if (CanEdit)
     {
-        <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@TodoItem.Status"/>
+        <input class="m-4 h-8 w-4 text-indigo-600 border-gray-300 rounded" type="checkbox" name="status" @bind="@TodoItem.Status" />
     }
     @if (Editing)
     {
-        <input @bind="@NewName" class="m-4 w-4/5 h-8 text-lg rounded border-gray-300 @GetPriorityColor() shadow font-medium">
+        <input @bind="@NewName" class="m-4 w-3/5 h-8 text-lg rounded border-gray-300 @GetPriorityColor() shadow font-medium">
 
         <select @bind="@NewPriority" class="rounded @GetPriorityColor() mx-4 shadow">
             @foreach (var priority in Enum.GetValues(typeof(TodoItemPriority)))
@@ -14,15 +14,34 @@
                 <option value="@priority.ToString()">@priority</option>
             }
         </select>
-        <button class="shadow rounded h-auto justify-self-end px-4" @onclick="Save">Save</button>
+
+        <select @bind="@TodoItem.ScheduledType" class="rounded mx-4 shadow @GetPriorityColor()">
+            @foreach (var type in Enum.GetValues(typeof(TodoItemScheduleType)))
+            {
+                <option value="@type.ToString()">@type</option>
+            }
+        </select>
+        <button class="shadow rounded h-auto justify-self-end px-4  my-4" @onclick="Save">Save</button>
 
     }
     else
     {
         <label class="m-4 w-4/5 h-8 text-lg font-medium">@TodoItem.Name</label>
-        @if (CanEdit) { 
-            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Edit">Edit</button>
-            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 hover:bg-green-300" @onclick="Delete">Delete</button>
+        @if (CanEdit)
+        {
+            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 my-4 hover:bg-green-300" @onclick="Edit">Edit</button>
+            <button class="transition duration-500 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-xl shadow rounded mr-4 h-auto px-4 my-4 hover:bg-green-300" @onclick="Delete">Delete</button>
         }
+    }
+    @if (Editing && TodoItem.ScheduledType == TodoItemScheduleType.Scheduled) { 
+        <div class="w-full pl-8">
+            @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
+            {
+                <div>
+                    <input type="checkbox" name="@day" @bind="@TodoItem.RepeatOnDay[(int)day]"/>
+                    <label>@day</label>
+                </div>
+            }
+        </div>
     }
 </div>

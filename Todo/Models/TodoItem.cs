@@ -1,4 +1,5 @@
-﻿using Todo.Shared.Enums;
+﻿using System;
+using Todo.Shared.Enums;
 
 namespace Todo.Blazor.Models
 {
@@ -8,5 +9,7 @@ namespace Todo.Blazor.Models
         public string Name { get; set; }
         public bool Status { get; set; }
         public TodoItemPriority Priority { get; set; }
+        public TodoItemScheduleType ScheduledType { get; set; }
+        public bool[] RepeatOnDay { get; set; } = new bool[Enum.GetValues(typeof(DayOfWeek)).Length];
     }
 }

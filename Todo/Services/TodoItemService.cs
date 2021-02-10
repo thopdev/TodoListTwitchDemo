@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Todo.Blazor.Models;
@@ -11,9 +13,6 @@ namespace Todo.Blazor.Services
 {
     public class TodoItemService : ITodoItemService
     {
-        private const string StorageKey = "todoList";
-        private const string StorageIdKey = "todoListId";
-
         private readonly IHttpService _httpService;
         private readonly IMapper _mapper;
 

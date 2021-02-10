@@ -49,11 +49,13 @@ namespace Todo.AzureFunctions.Functions.TodoItems
 
             var todoList = _todoItemService.GetEntitiesForPartitionKey(listId).ToList();
 
-            return new OkObjectResult(new TodoListWithItemsDto{
+            var result = new TodoListWithItemsDto{
                 Items = _mapper.Map<List<TodoItemDto>>(todoList),
                 Id = listId,
                 ShareRole = _todoListMemberService.GetUserShareRole(user.UserId, listId) ?? ShareRole.Full
-            });
+            };
+
+            return new OkObjectResult(result);
         }
     }
 }

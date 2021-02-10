@@ -11,6 +11,8 @@ namespace Todo.Shared.Dto.TodoItems
         public bool Status { get; set; }
         public TodoItemPriority Priority { get; set; }
 
+        public TodoItemScheduleType ScheduledType { get; set; }
 
+        public bool[] RepeatOnDay { get; set; }
     }
 }
