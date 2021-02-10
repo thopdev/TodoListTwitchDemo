@@ -17,8 +17,8 @@ namespace Todo.Blazor
             builder.RootComponents.Add<App>("#app");
             // #if Release
 #if RELEASE
-            // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress ) });
-            // builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress ) });
+            builder.Services.AddScoped<IAuthService, AuthService>();
 #else
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:7071") });
              builder.Services.AddScoped<IAuthService, DebugAuthService>();
